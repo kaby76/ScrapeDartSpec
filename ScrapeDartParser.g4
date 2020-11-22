@@ -15,6 +15,7 @@ rhs_sym :
   | FUNKY
   | rhs_sym (STAR | PLUS | QM)
   | paren
-  | rhs_sym DOTDOT rhs_sym
+  | rhs_sym dotdot rhs_sym
   ;
+dotdot : DOTDOT ;
 paren : LP rhs_sym* RP ;

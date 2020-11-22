@@ -74,30 +74,68 @@
 
             public override void EnterLhs([NotNull] ScrapeDartParser.LhsContext context)
             {
-                var lhs_sym = context.GetText().TrimStart('<').TrimEnd('>');
-                if (lhs_sym == "aProduction")
+                var symbol = context.GetText().TrimStart('<').TrimEnd('>');
+                if (symbol == "aProduction")
                 {
                     skip = true;
                 }
                 else
                 {
                     skip = false;
-                    sb.Append(lhs_sym + " :");
+                    symbol = symbol.Replace("\\_", "_");
+                    sb.Append(symbol + " :");
                 }
             }
 
             public override void ExitRhs_sym([NotNull] ScrapeDartParser.Rhs_symContext context)
             {
                 if (skip) return;
-                if (context.Symbol() != null) sb.Append(" " + context.Symbol().GetText().TrimStart('<').TrimEnd('>'));
+                if (context.Symbol() != null)
+                {
+                    var symbol = context.Symbol().GetText().TrimStart('<').TrimEnd('>');
+                    symbol = symbol.Replace("\\_", "_");
+                    sb.Append(" " + symbol);
+                }
                 else if (context.ALT() != null) sb.Append(" |");
-                else if (context.SL() != null) sb.Append(" " + "'" + context.SL().GetText().TrimStart('`').TrimStart('\''));
+                else if (context.SL() != null)
+                {
+                    var literal = context.SL().GetText().TrimStart('`').TrimStart('\'').TrimEnd('\'');
+                    Dictionary<string, string> map = new Dictionary<string, string>()
+                    {
+                        { "\\{", "{" },
+                        { "\\}", "}" },
+                        { "\\sq", "\\'" },
+                        { "\\\\r", "\\r" },
+                        { "\\\\n", "\\n" },
+                        { "\\\\r\\\\n", "\\r\\n" },
+                        { "\\sqsqsq", "\\'\\'\\'" },
+                        { "\\sqsq", "\\'\\'" },
+                        { "\\ltlt=", "<<=" },
+                        { "\\ltlt", "<<" },
+                        { "\\gtgtgt=", ">>>=" },
+                        { "\\gtgtgt", ">>>" },
+                        { "\\gtgt=", ">>=" },
+                        { "\\gtgt", ">>" },
+                        { "\\&=", "&=" },
+                        { "\\%=", "%=" },
+                        { "\\%", "%" },
+                        { "\\&\\&", "&&" },
+                        { "\\&", "&" },
+                        { "-\\mbox-", "--" },
+                        { "\\\\t", "\\t" },
+                    };
+                    var lit = map.ContainsKey(literal)
+                        ? map[literal]
+                        : literal;
+                    sb.Append(" '" + lit + "'");
+                }
                 else if (context.DOT() != null) sb.Append(" .");
                 else if (context.FUNKY() != null)
                 {
                     Dictionary<string, string> map = new Dictionary<string, string>()
                     {
                         { "\\gtilde{}", "~" },
+                        { "\\FUNCTION{}", "'Function'" },
                     };
                     var lit = map.ContainsKey(context.FUNKY().GetText())
                         ? map[context.FUNKY().GetText()]
@@ -112,6 +150,11 @@
                 else if (context.STAR() != null) sb.Append("*");
                 else if (context.PLUS() != null) sb.Append("+");
                 else if (context.QM() != null) sb.Append("?");
+            }
+
+            public override void ExitDotdot([NotNull] ScrapeDartParser.DotdotContext context)
+            {
+                sb.Append(" ..");
             }
 
             public override void EnterParen([NotNull] ScrapeDartParser.ParenContext context)
