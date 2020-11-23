@@ -1,7 +1,9 @@
 # Scrape Dart Spec
 
 This program, written in C#, scrapes the Dart2 language specification,
-written in Latex. This tool is highly tuned to the current state of the
+written in Latex, for the context-free grammar of the language.
+This tool is hand-tuned to the current format
+of the 
 spec. It assumes grammar rules are contained in `\begin{grammar} ... \end{grammar}`
 Latex macro calls. (The first grammar rule so defined is removed because
 it is an example that describes the syntax of EBNF.)
