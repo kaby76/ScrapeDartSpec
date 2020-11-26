@@ -12,7 +12,10 @@
     <Antlr4 Include="ScrapeDartParser.g4">
       <Package>ScrapeDartSpec</Package>
     </Antlr4>
-    <Antlr4 Include="NewDart2.g4">
+    <Antlr4 Include="NewDart2Parser.g4">
+      <Package>ScrapeDartSpec</Package>
+    </Antlr4>
+    <Antlr4 Include="NewDart2Lexer.g4">
       <Package>ScrapeDartSpec</Package>
     </Antlr4>
   </ItemGroup>
