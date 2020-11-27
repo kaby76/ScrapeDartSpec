@@ -2,7 +2,7 @@
   "profiles": {
     "ScrapeDartSpec": {
       "commandName": "Project",
-      "commandLineArgs": "input.tex",
+      "commandLineArgs": "../flutter/dev/benchmarks/complex_layout/lib/main.dart",
       "workingDirectory": "C:\\Users\\kenne\\Documents\\ScrapeDartSpec2"
     }
   }

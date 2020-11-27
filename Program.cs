@@ -17,21 +17,54 @@
             {
                 for (int i = 0; i < args.Length; ++i)
                 {
-                    if (args[i].StartsWith('-')) continue;
-                    var fn = args[i];
-                    var input = ReadAllInput(fn);
-                    Try(input);
+                    if (args[i].StartsWith("-scrape"))
+                    {
+                        var fn = args[i];
+                        var input = ReadAllInput(fn);
+                        Scrape(input);
+                        continue;
+                    }
+                    else
+                    {
+                        var fn = args[i];
+                        var input = ReadAllInput(fn);
+                        ParseDart2(input);
+                        continue;
+                    }
                 }
             }
             else
             {
-                Try("1 + 2 + 3");
-                Try("1 2 + 3");
-                Try("1 + +");
+                Scrape("1 + 2 + 3");
+                Scrape("1 2 + 3");
+                Scrape("1 + +");
             }
         }
 
-        static void Try(string input)
+        private static void ParseDart2(string input)
+        {
+            var str = new AntlrInputStream(input);
+            //System.Console.WriteLine(input);
+            var lexer = new NewDart2Lexer(str);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new NewDart2Parser(tokens);
+            var listener_lexer = new ErrorListener<int>();
+            var listener_parser = new ErrorListener<IToken>();
+            lexer.AddErrorListener(listener_lexer);
+            parser.AddErrorListener(listener_parser);
+            var tree = parser.compilationUnit();
+            if (listener_lexer.had_error || listener_parser.had_error)
+            {
+                System.Console.WriteLine("error in parse.");
+                throw new Exception();
+            }
+            else
+                System.Console.WriteLine("parse completed.");
+
+            System.Console.WriteLine(TreeOutput.OutputTree(tree, lexer, tokens).ToString());
+        }
+
+        static void Scrape(string input)
         {
             var str = new AntlrInputStream(input);
             //System.Console.WriteLine(input);

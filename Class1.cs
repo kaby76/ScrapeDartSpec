@@ -44,17 +44,17 @@
 
         // Use this to indicate that we are now entering an `async`, `async*`,
         // or `sync*` function.
-        void startAsyncFunction() { asyncEtcAreKeywords.Push(true); }
+        protected void startAsyncFunction() { asyncEtcAreKeywords.Push(true); }
 
         // Use this to indicate that we are now entering a function which is
         // neither `async`, `async*`, nor `sync*`.
-        void startNonAsyncFunction() { asyncEtcAreKeywords.Push(false); }
+        protected void startNonAsyncFunction() { asyncEtcAreKeywords.Push(false); }
 
         // Use this to indicate that we are now leaving any funciton.
-        void endFunction() { asyncEtcAreKeywords.Pop(); }
+        protected void endFunction() { asyncEtcAreKeywords.Pop(); }
 
         // Whether we can recognize AWAIT/YIELD as an identifier/typeIdentifier.
-        bool asyncEtcPredicate(int tokenId)
+        protected bool asyncEtcPredicate(int tokenId)
         {
             if (tokenId == NewDart2Lexer.AWAIT || tokenId == NewDart2Lexer.YIELD)
             {

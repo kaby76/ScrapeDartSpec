@@ -35,7 +35,7 @@ initializedIdentifier : identifier ( EQ expression )? ;
 
 initializedIdentifierList : initializedIdentifier ( COMMA initializedIdentifier )* ;
 
-functionSignature : type? identifier formalParameterPart ;
+functionSignature : type? identifierNotFUNCTION formalParameterPart ;
 
 formalParameterPart : typeParameters? formalParameterList ;
 
@@ -57,7 +57,7 @@ normalFormalParameter : metadata normalFormalParameterNoMetadata ;
 
 normalFormalParameterNoMetadata : functionFormalParameter | fieldFormalParameter | simpleFormalParameter ;
 
-functionFormalParameter : COVARIANT? type? identifier formalParameterPart QM? ;
+functionFormalParameter : COVARIANT? type? identifierNotFUNCTION formalParameterPart QM? ;
 
 simpleFormalParameter : declaredIdentifier | COVARIANT? identifier ;
 
@@ -283,7 +283,7 @@ unconditionalAssignableSelector : LB expression RB | DOT identifier ;
 
 assignableSelector : unconditionalAssignableSelector | '?.' identifier | QM LB expression RB ;
 
-identifier : IDENTIFIER ;
+identifier : identifierNotFUNCTION | FUNCTION ;
 
 qualifiedName : typeIdentifier | typeIdentifier DOT identifier | typeIdentifier DOT typeIdentifier DOT identifier ;
 
@@ -430,6 +430,38 @@ functionTypeAlias : functionPrefix formalParameterPart SEMI ;
 functionPrefix : type? identifier ;
 
 // MISSING--
+
+identifierNotFUNCTION
+    :    IDENTIFIER
+    |    ABSTRACT // Built-in identifier.
+    |    AS // Built-in identifier.
+    |    COVARIANT // Built-in identifier.
+    |    DEFERRED // Built-in identifier.
+    |    DYNAMIC // Built-in identifier.
+    |    EXPORT // Built-in identifier.
+    |    EXTERNAL // Built-in identifier.
+    |    FACTORY // Built-in identifier.
+    |    GET // Built-in identifier.
+    |    IMPLEMENTS // Built-in identifier.
+    |    IMPORT // Built-in identifier.
+    |    INTERFACE // Built-in identifier.
+    |    LATE // Built-in identifier.
+    |    LIBRARY // Built-in identifier.
+    |    MIXIN // Built-in identifier.
+    |    OPERATOR // Built-in identifier.
+    |    PART // Built-in identifier.
+    |    REQUIRED // Built-in identifier.
+    |    SET // Built-in identifier.
+    |    STATIC // Built-in identifier.
+    |    TYPEDEF // Built-in identifier.
+    |    ASYNC // Not a built-in identifier.
+    |    HIDE // Not a built-in identifier.
+    |    OF // Not a built-in identifier.
+    |    ON // Not a built-in identifier.
+    |    SHOW // Not a built-in identifier.
+    |    SYNC // Not a built-in identifier.
+    |    { asyncEtcPredicate(CurrentToken.Type) }? (AWAIT|YIELD)
+    ;
 
 typeIdentifier
     :    IDENTIFIER
