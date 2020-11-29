@@ -4,6 +4,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>ScrapeDartSpec</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="o\**" />
+    <Compile Remove="save\**" />
+    <Compile Remove="x\**" />
+    <EmbeddedResource Remove="o\**" />
+    <EmbeddedResource Remove="save\**" />
+    <EmbeddedResource Remove="x\**" />
+    <None Remove="o\**" />
+    <None Remove="save\**" />
+    <None Remove="x\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <Antlr4 Include="ScrapeDartLexer.g4">

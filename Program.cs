@@ -9,35 +9,28 @@
 
     public class Program
     {
-        static bool have_files = false;
+        static bool display_tokens = false;
+        static bool display_tree = false;
         static void Main(string[] args)
         {
-            have_files = args.Length > 0;
-            if (have_files)
+            for (int i = 0; i < args.Length; ++i)
             {
-                for (int i = 0; i < args.Length; ++i)
+                if (args[i].StartsWith("-scrape"))
                 {
-                    if (args[i].StartsWith("-scrape"))
-                    {
-                        var fn = args[i];
-                        var input = ReadAllInput(fn);
-                        Scrape(input);
-                        continue;
-                    }
-                    else
-                    {
-                        var fn = args[i];
-                        var input = ReadAllInput(fn);
-                        ParseDart2(input);
-                        continue;
-                    }
+                    var fn = args[i];
+                    var input = System.IO.File.ReadAllText(fn);
+                    Scrape(input);
                 }
-            }
-            else
-            {
-                Scrape("1 + 2 + 3");
-                Scrape("1 2 + 3");
-                Scrape("1 + +");
+                else if (args[i].StartsWith("-tree"))
+                    display_tree = true;
+                else if (args[i].StartsWith("-tokens"))
+                    display_tokens = true;
+                else
+                {
+                    var fn = args[i];
+                    var input = System.IO.File.ReadAllText(fn);
+                    ParseDart2(input);
+                }
             }
         }
 
@@ -53,6 +46,17 @@
             lexer.AddErrorListener(listener_lexer);
             parser.AddErrorListener(listener_parser);
             var tree = parser.compilationUnit();
+            if (display_tokens)
+            {
+                foreach (var t in tokens.GetTokens())
+                {
+                    System.Console.WriteLine(t.ToString());
+                }
+            }
+            if (display_tree)
+            {
+                System.Console.WriteLine(TreeOutput.OutputTree(tree, lexer, tokens).ToString());
+            }
             if (listener_lexer.had_error || listener_parser.had_error)
             {
                 System.Console.WriteLine("error in parse.");
@@ -61,7 +65,6 @@
             else
                 System.Console.WriteLine("parse completed.");
 
-            System.Console.WriteLine(TreeOutput.OutputTree(tree, lexer, tokens).ToString());
         }
 
         static void Scrape(string input)
@@ -89,12 +92,6 @@
             walker.Walk(listener, tree);
             var code = listener.sb.ToString();
             System.Console.WriteLine(code);
-        }
-
-        static string ReadAllInput(string fn)
-        {
-            var input = System.IO.File.ReadAllText(fn);
-            return input;
         }
 
         class Listen : ScrapeDartParserBaseListener

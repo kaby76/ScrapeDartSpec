@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "csharp": {
+      "commandName": "Project",
+      "commandLineArgs": "../../x.dart",
+      "workingDirectory": "C:\\Users\\kenne\\Documents\\ScrapeDartSpec2\\o\\csharp"
+    }
+  }
+}

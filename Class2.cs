@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Antlr4.Runtime;
 
 namespace ScrapeDartSpec
 {
-    using Antlr4.Runtime;
 
     public class Class2 : Lexer
     {
