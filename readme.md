@@ -10,3 +10,5 @@ it is an example that describes the syntax of EBNF.)
 
 The location of the Dart2 language specification is [here](https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex). Note, there's a bug in
 GitHub: it does not display the whole file.
+
+After scraping, the grammar is refactored to produce a valid split Antlr4 grammar.
