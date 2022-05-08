@@ -165,7 +165,6 @@
             {
                 if (skip) return;
                 sb.AppendLine(" ;");
-                sb.AppendLine();
             }
         }
     }
