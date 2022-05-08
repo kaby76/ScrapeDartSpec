@@ -8,4 +8,5 @@ spec. It assumes grammar rules are contained in `\begin{grammar} ... \end{gramma
 Latex macro calls. (The first grammar rule so defined is removed because
 it is an example that describes the syntax of EBNF.)
 
-The location of the Dart2 language specification is [here](https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex).
+The location of the Dart2 language specification is [here](https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex). Note, there's a bug in
+BitHub: it does not display the whole file.
