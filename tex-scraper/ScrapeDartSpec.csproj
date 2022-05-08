@@ -2,31 +2,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6</TargetFramework>
-    <RootNamespace>ScrapeDartSpec</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="o\**" />
-    <Compile Remove="save\**" />
-    <Compile Remove="x\**" />
-    <EmbeddedResource Remove="o\**" />
-    <EmbeddedResource Remove="save\**" />
-    <EmbeddedResource Remove="x\**" />
-    <None Remove="o\**" />
-    <None Remove="save\**" />
-    <None Remove="x\**" />
-  </ItemGroup>
   
   <ItemGroup>
     <Antlr4 Include="ScrapeDartLexer.g4">
       <Package>ScrapeDartSpec</Package>
     </Antlr4>
     <Antlr4 Include="ScrapeDartParser.g4">
-      <Package>ScrapeDartSpec</Package>
-    </Antlr4>
-    <Antlr4 Include="NewDart2Parser.g4">
-      <Package>ScrapeDartSpec</Package>
-    </Antlr4>
-    <Antlr4 Include="NewDart2Lexer.g4">
       <Package>ScrapeDartSpec</Package>
     </Antlr4>
   </ItemGroup>
