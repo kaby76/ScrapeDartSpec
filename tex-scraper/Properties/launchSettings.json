@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "ScrapeDartSpec": {
+      "commandName": "Project",
+      "commandLineArgs": "-scrape c:\\msys64\\home\\Kenne\\dart\\language\\specification\\dartLangSpec.tex",
+      "workingDirectory": "c:\\msys64\\home\\Kenne\\dart\\ScrapeDartSpec"
+    }
+  }
+}

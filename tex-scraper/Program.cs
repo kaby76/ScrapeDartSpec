@@ -17,7 +17,7 @@
             {
                 if (args[i].StartsWith("-scrape"))
                 {
-                    var fn = args[i];
+                    var fn = args[++i];
                     var input = System.IO.File.ReadAllText(fn);
                     Scrape(input);
                 }
@@ -77,6 +77,8 @@
             lexer.Mode(ScrapeDartLexer.Search);
             var listener_lexer = new ErrorListener<int>();
             var listener_parser = new ErrorListener<IToken>();
+            lexer.RemoveErrorListeners();
+            parser.RemoveErrorListeners();
             lexer.AddErrorListener(listener_lexer);
             parser.AddErrorListener(listener_parser);
             var tree = parser.file();
