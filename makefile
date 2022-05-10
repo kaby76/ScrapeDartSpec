@@ -1,7 +1,6 @@
 build:
-	cd tex-scraper; dotnet build; cd ..
-	tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file specs/spec-grammar-2-15-dev.tex > temp.g4
-	trparse -t antlr4 temp.g4 | trsplit | trsponge -o xxx -c true
+	make clean
+	bash refactor.sh
 
 clean:
 	rm -rf xxx
