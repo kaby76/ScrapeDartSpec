@@ -2,7 +2,7 @@
 
 This program, written in C#, scrapes the Dart2 language specification,
 located [here](https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex),
-written in Latex, for the context-free grammar of the language.
+for the context-free grammar of the language.
 This tool is hand-tuned to the current format
 of the spec, which contains grammar rules in `\begin{grammar} ... \end{grammar}`
 Latex macro calls. The first grammar rule so defined is removed because
