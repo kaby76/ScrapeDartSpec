@@ -9,54 +9,29 @@ mkdir xxx
 cd xxx
 
 ../tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file ../specs/spec-grammar-2-15-dev.tex > temp.g4
-
 dos2unix temp.g4
+cp temp.g4 ../orig.g4
 
 # First take care of fragment lexer rules.
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NEWLINE']" "fragment " | \
-	trsponge -c true
-grep -E "fragment NEWLINE" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT']" "fragment " | \
-	trsponge -c true
-grep -E "fragment HEX_DIGIT" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='LETTER']" "fragment " | \
-	trsponge -c true
-grep -E "fragment LETTER" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "fragment " | \
-	trsponge -c true
-grep -E "fragment BUILT_IN_IDENTIFIER" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='OTHER_IDENTIFIER']" "fragment " | \
-	trsponge -c true
-grep -E "fragment OTHER_IDENTIFIER" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='DIGIT']" "fragment " | \
-	trsponge -c true
-grep -E "fragment DIGIT" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='ESCAPE_SEQUENCE']" "fragment " | \
-	trsponge -c true
-grep -E "fragment ESCAPE_SEQUENCE" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT_SEQUENCE']" "fragment " | \
-	trsponge -c true
-grep -E "fragment HEX_DIGIT_SEQUENCE" temp.g4
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='EXPONENT']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_NO_DOLLAR']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_START_NO_DOLLAR']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_PART_NO_DOLLAR']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_START']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_PART']" "fragment " | \
 	trsponge -c true
-grep -E "fragment EXPONENT" temp.g4
+exit
+
+# Other edits.	
 
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
@@ -66,10 +41,11 @@ grep -E "WHITESPACE.*-> skip" temp.g4
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement/lexerBlock/lexerAltList/lexerAlt//notSet" "." | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement//ebnfSuffix"	"*?" | \
+	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/SEMI" " -> skip ;" | \
 	trsponge -c true
 
 trparse temp.g4 | \
-	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements" "'//' ~[\r\n]*" | \
+	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements" "'//' ~[\r\n]* -> skip" | \
 	trsponge -c true
 
 # All string literals are a mess. Replace everything.
@@ -162,9 +138,47 @@ trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NUMBER']" "`cat lexer_prods.txt`" | \
 	trsponge -c true
 
+# TODO: The unfold operation should be used, but it doesn't work. For
+# now just use string replacement.
+# trparse temp.g4 | \
+#	trunfold "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" | \
+# 	trsponge -c true
 trparse temp.g4 | \
-	trunfold "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" | \
+	trreplace "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef'" | \
+	trsponge -c true
+trparse temp.g4 | \
+	trreplace "//parserRuleSpec[RULE_REF/text()='identifier']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef'" | \
 	trsponge -c true
 
-trparse -t antlr4 temp.g4 | trsplit | trsponge -c true
+# Same thing.
+trparse temp.g4 | \
+	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield'" | \
+	trsponge -c true
+
+# Cannot handle sciptTag. Just nuke.
+trparse temp.g4 | \
+	trdelete "//parserRuleSpec[RULE_REF/text()='scriptTag']" | \
+	trdelete "//alternative/element[atom/ruleref/RULE_REF/text()='scriptTag']" | \
+	trsponge -c true
+
+# Nuke EOF mentions because it should be on the "start symbol".
+trparse temp.g4 | \
+	trdelete "//TOKEN_REF[text()='EOF']" | \
+	trsponge -c true
+
+# Add start symbol.
+trparse temp.g4 | \
+	trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;
+" | \
+	trsponge -c true
+
+
+
 rm -f lexer_prods.txt temporary.txt temporary2.txt
+
+# TODO: split not working.
+# trparse -t antlr4 temp.g4 | trsplit | trsponge -c true
+
+trgen -s compilationUnit
+cd Generated
+make
