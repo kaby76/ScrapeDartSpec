@@ -200,3 +200,6 @@ rm -f lexer_prods.txt temporary.txt temporary2.txt
 trgen -s compilationUnit
 cd Generated
 make
+
+cd ..
+cp temp.g4 ../scraped.g4
