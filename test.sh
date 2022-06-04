@@ -2,11 +2,10 @@
 
 ok=0
 total=0
-for i in `find ../flutter -name '*.dart'`
+for i in `find ../sdk/sdk/lib/ -name '*.dart'`
 do
-date
-echo $i
-./bin/Debug/netcoreapp3.1/ScrapeDartSpec.exe $i > /dev/null 2>&1
+echo -n "$i "
+./xxx/Generated/bin/Debug/net6.0/Test.exe -file $i > /dev/null 2>&1
 x=$?
 echo $x
 if [ $x = 0 ]
@@ -14,7 +13,6 @@ then
 ok=`expr $ok + 1`
 fi
 total=`expr $total + 1`
-date
 done
 
 echo Number of passed tests $ok

@@ -5,6 +5,7 @@ export MSYS2_ARG_CONV_EXCL="*"
 
 cd tex-scraper; dotnet build; cd ..
 
+rm -rf xxx
 mkdir xxx
 cd xxx
 
@@ -29,7 +30,6 @@ trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_START']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_PART']" "fragment " | \
 	trsponge -c true
-exit
 
 # Other edits.	
 
