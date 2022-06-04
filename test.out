@@ -18,7 +18,7 @@
 ../sdk/sdk/lib/collection/collections.dart 0
 ../sdk/sdk/lib/collection/hash_map.dart 1
 ../sdk/sdk/lib/collection/hash_set.dart 1
-../sdk/sdk/lib/collection/iterable.dart 1
+../sdk/sdk/lib/collection/iterable.dart 0
 ../sdk/sdk/lib/collection/iterator.dart 0
 ../sdk/sdk/lib/collection/linked_hash_map.dart 1
 ../sdk/sdk/lib/collection/linked_hash_set.dart 1
@@ -31,7 +31,7 @@
 ../sdk/sdk/lib/convert/ascii.dart 1
 ../sdk/sdk/lib/convert/base64.dart 1
 ../sdk/sdk/lib/convert/byte_conversion.dart 1
-../sdk/sdk/lib/convert/chunked_conversion.dart 1
+../sdk/sdk/lib/convert/chunked_conversion.dart 0
 ../sdk/sdk/lib/convert/codec.dart 0
 ../sdk/sdk/lib/convert/convert.dart 0
 ../sdk/sdk/lib/convert/converter.dart 0
@@ -39,7 +39,7 @@
 ../sdk/sdk/lib/convert/html_escape.dart 0
 ../sdk/sdk/lib/convert/json.dart 1
 ../sdk/sdk/lib/convert/latin1.dart 0
-../sdk/sdk/lib/convert/line_splitter.dart 1
+../sdk/sdk/lib/convert/line_splitter.dart 0
 ../sdk/sdk/lib/convert/string_conversion.dart 0
 ../sdk/sdk/lib/convert/utf.dart 1
 ../sdk/sdk/lib/core/annotations.dart 1
@@ -80,8 +80,8 @@
 ../sdk/sdk/lib/core/weak.dart 1
 ../sdk/sdk/lib/developer/developer.dart 0
 ../sdk/sdk/lib/developer/extension.dart 1
-../sdk/sdk/lib/developer/profiler.dart 1
-../sdk/sdk/lib/developer/service.dart 1
+../sdk/sdk/lib/developer/profiler.dart 0
+../sdk/sdk/lib/developer/service.dart 0
 ../sdk/sdk/lib/developer/timeline.dart 1
 ../sdk/sdk/lib/ffi/abi.dart 1
 ../sdk/sdk/lib/ffi/abi_specific.dart 1
@@ -96,7 +96,7 @@
 ../sdk/sdk/lib/ffi/union.dart 1
 ../sdk/sdk/lib/html/dart2js/html_dart2js.dart 1
 ../sdk/sdk/lib/html/dartium/nativewrappers.dart 0
-../sdk/sdk/lib/html/html_common/conversions.dart 1
+../sdk/sdk/lib/html/html_common/conversions.dart 0
 ../sdk/sdk/lib/html/html_common/conversions_dart2js.dart 1
 ../sdk/sdk/lib/html/html_common/css_class_set.dart 0
 ../sdk/sdk/lib/html/html_common/device.dart 0
@@ -107,7 +107,7 @@
 ../sdk/sdk/lib/html/html_common/metadata.dart 0
 ../sdk/sdk/lib/indexed_db/dart2js/indexed_db_dart2js.dart 1
 ../sdk/sdk/lib/internal/async_cast.dart 1
-../sdk/sdk/lib/internal/bytes_builder.dart 1
+../sdk/sdk/lib/internal/bytes_builder.dart 0
 ../sdk/sdk/lib/internal/cast.dart 1
 ../sdk/sdk/lib/internal/errors.dart 0
 ../sdk/sdk/lib/internal/internal.dart 1
@@ -122,12 +122,12 @@
 ../sdk/sdk/lib/io/common.dart 1
 ../sdk/sdk/lib/io/data_transformer.dart 1
 ../sdk/sdk/lib/io/directory.dart 1
-../sdk/sdk/lib/io/directory_impl.dart 1
+../sdk/sdk/lib/io/directory_impl.dart 0
 ../sdk/sdk/lib/io/embedder_config.dart 1
 ../sdk/sdk/lib/io/eventhandler.dart 0
 ../sdk/sdk/lib/io/file.dart 1
 ../sdk/sdk/lib/io/file_impl.dart 1
-../sdk/sdk/lib/io/file_system_entity.dart 1
+../sdk/sdk/lib/io/file_system_entity.dart 0
 ../sdk/sdk/lib/io/io.dart 0
 ../sdk/sdk/lib/io/io_resource_info.dart 1
 ../sdk/sdk/lib/io/io_service.dart 0
@@ -173,7 +173,7 @@
 ../sdk/sdk/lib/vmservice/message.dart 1
 ../sdk/sdk/lib/vmservice/message_router.dart 1
 ../sdk/sdk/lib/vmservice/named_lookup.dart 0
-../sdk/sdk/lib/vmservice/running_isolate.dart 1
+../sdk/sdk/lib/vmservice/running_isolate.dart 0
 ../sdk/sdk/lib/vmservice/running_isolates.dart 1
 ../sdk/sdk/lib/vmservice/vmservice.dart 1
 ../sdk/sdk/lib/wasm/wasm_types.dart 0
@@ -183,10 +183,10 @@
 ../sdk/sdk/lib/_http/crypto.dart 1
 ../sdk/sdk/lib/_http/embedder_config.dart 1
 ../sdk/sdk/lib/_http/http.dart 1
-../sdk/sdk/lib/_http/http_date.dart 1
+../sdk/sdk/lib/_http/http_date.dart 0
 ../sdk/sdk/lib/_http/http_headers.dart 1
 ../sdk/sdk/lib/_http/http_impl.dart 1
-../sdk/sdk/lib/_http/http_parser.dart 1
+../sdk/sdk/lib/_http/http_parser.dart 0
 ../sdk/sdk/lib/_http/http_session.dart 0
 ../sdk/sdk/lib/_http/overrides.dart 0
 ../sdk/sdk/lib/_http/websocket.dart 1
@@ -217,7 +217,7 @@
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/interceptors.dart 1
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/isolate_helper.dart 1
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/js_array.dart 1
-../sdk/sdk/lib/_internal/js_dev_runtime/private/js_helper.dart 1
+../sdk/sdk/lib/_internal/js_dev_runtime/private/js_helper.dart 0
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/js_number.dart 1
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/js_primitives.dart 0
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/js_rti.dart 0
@@ -227,7 +227,7 @@
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/native_helper.dart 0
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/native_typed_data.dart 1
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/profile.dart 1
-../sdk/sdk/lib/_internal/js_dev_runtime/private/regexp_helper.dart 1
+../sdk/sdk/lib/_internal/js_dev_runtime/private/regexp_helper.dart 0
 ../sdk/sdk/lib/_internal/js_dev_runtime/private/string_helper.dart 1
 ../sdk/sdk/lib/_internal/js_runtime/lib/annotations.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/async_patch.dart 1
@@ -249,20 +249,20 @@
 ../sdk/sdk/lib/_internal/js_runtime/lib/js_number.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/js_patch.dart 1
 ../sdk/sdk/lib/_internal/js_runtime/lib/js_primitives.dart 0
-../sdk/sdk/lib/_internal/js_runtime/lib/js_string.dart 1
+../sdk/sdk/lib/_internal/js_runtime/lib/js_string.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/late_helper.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/linked_hash_map.dart 1
 ../sdk/sdk/lib/_internal/js_runtime/lib/math_patch.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/native_helper.dart 1
 ../sdk/sdk/lib/_internal/js_runtime/lib/native_typed_data.dart 1
-../sdk/sdk/lib/_internal/js_runtime/lib/regexp_helper.dart 1
+../sdk/sdk/lib/_internal/js_runtime/lib/regexp_helper.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/rti.dart 1
 ../sdk/sdk/lib/_internal/js_runtime/lib/shared/async_await_error_codes.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/shared/embedded_names.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/shared/recipe_syntax.dart 0
-../sdk/sdk/lib/_internal/js_runtime/lib/string_helper.dart 1
+../sdk/sdk/lib/_internal/js_runtime/lib/string_helper.dart 0
 ../sdk/sdk/lib/_internal/js_runtime/lib/typed_data_patch.dart 0
-../sdk/sdk/lib/_internal/sdk_library_metadata/lib/libraries.dart 1
+../sdk/sdk/lib/_internal/sdk_library_metadata/lib/libraries.dart 0
 ../sdk/sdk/lib/_internal/vm/bin/builtin.dart 1
 ../sdk/sdk/lib/_internal/vm/bin/cli_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/bin/common_patch.dart 0
@@ -282,9 +282,9 @@
 ../sdk/sdk/lib/_internal/vm/bin/vmservice_io.dart 1
 ../sdk/sdk/lib/_internal/vm/bin/vmservice_server.dart 1
 ../sdk/sdk/lib/_internal/vm/lib/array.dart 1
-../sdk/sdk/lib/_internal/vm/lib/array_patch.dart 1
+../sdk/sdk/lib/_internal/vm/lib/array_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/async_patch.dart 1
-../sdk/sdk/lib/_internal/vm/lib/bigint_patch.dart 1
+../sdk/sdk/lib/_internal/vm/lib/bigint_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/bool_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/class_id_fasta.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/collection_patch.dart 0
@@ -312,7 +312,7 @@
 ../sdk/sdk/lib/_internal/vm/lib/hash_factories.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/identical_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/immutable_map.dart 0
-../sdk/sdk/lib/_internal/vm/lib/integers.dart 1
+../sdk/sdk/lib/_internal/vm/lib/integers.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/integers_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/internal_patch.dart 1
 ../sdk/sdk/lib/_internal/vm/lib/invocation_mirror_patch.dart 1
@@ -335,7 +335,7 @@
 ../sdk/sdk/lib/_internal/vm/lib/string_patch.dart 1
 ../sdk/sdk/lib/_internal/vm/lib/symbol_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/timeline.dart 0
-../sdk/sdk/lib/_internal/vm/lib/timer_impl.dart 1
+../sdk/sdk/lib/_internal/vm/lib/timer_impl.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/timer_patch.dart 0
 ../sdk/sdk/lib/_internal/vm/lib/typed_data_patch.dart 1
 ../sdk/sdk/lib/_internal/vm/lib/type_patch.dart 0
@@ -353,10 +353,10 @@
 ../sdk/sdk/lib/_internal/wasm/lib/growable_list.dart 0
 ../sdk/sdk/lib/_internal/wasm/lib/hash_factories.dart 0
 ../sdk/sdk/lib/_internal/wasm/lib/identical_patch.dart 0
-../sdk/sdk/lib/_internal/wasm/lib/int.dart 1
+../sdk/sdk/lib/_internal/wasm/lib/int.dart 0
 ../sdk/sdk/lib/_internal/wasm/lib/internal_patch.dart 1
-../sdk/sdk/lib/_internal/wasm/lib/js_util_wasm_patch.dart 1
-../sdk/sdk/lib/_internal/wasm/lib/list.dart 1
+../sdk/sdk/lib/_internal/wasm/lib/js_util_wasm_patch.dart 0
+../sdk/sdk/lib/_internal/wasm/lib/list.dart 0
 ../sdk/sdk/lib/_internal/wasm/lib/math_patch.dart 0
 ../sdk/sdk/lib/_internal/wasm/lib/object_patch.dart 1
 ../sdk/sdk/lib/_internal/wasm/lib/patch.dart 0
@@ -366,5 +366,5 @@
 ../sdk/sdk/lib/_internal/wasm/lib/string_patch.dart 1
 ../sdk/sdk/lib/_internal/wasm/lib/timer_patch.dart 0
 ../sdk/sdk/lib/_internal/wasm/lib/type.dart 1
-Number of passed tests 162
+Number of passed tests 187
 Total parsed 368
