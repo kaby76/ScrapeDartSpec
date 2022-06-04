@@ -114,23 +114,36 @@ fragment StringContentTSQ
   ;
 " | \
 	trsponge -c true
-	
+
+
+# Get rid of blank lines. This can happen when we insert or delete
+# rules.
 grep -E -v '^$' temp.g4 > temporary5.txt
 mv temporary5.txt temp.g4
-
 
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='RESERVED_WORD']" "reserved_word" | \
 	trsponge -c true
 grep -E "reserved_word" temp.g4
 
+# Modify the operator rule:
+# operator : '~' | binaryOperator | '[]' | '[]=' ;
+# The problem with this rule is that the lexer symbol '[]' cannot
+# be a single token. The reason is that the for type declarations,
+# it must be parsed as '[' then ']'.
+trparse temp.g4 | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]\'\"\] "'[' ']'" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]=\'\"\] "'[' ']' '='" | \
+	trsponge -c true
+
 # Get all string literals that aren't part of a fragment. We'll use
 # that as a preliminary list of keywords.
-
+# Note, if the rule is a fragment lexer rule, don't bother collecting
+# the strings out of it. Extract the keyword out of the string literal,
+# uppercase it, and make a rule out of it by adding ":" and ";".
 trparse temp.g4 | \
 	trxgrep "//STRING_LITERAL[not(ancestor::lexerRuleSpec/FRAGMENT) or ancestor::lexerRuleSpec/TOKEN_REF/text()='BUILT_IN_IDENTIFIER' or ancestor::lexerRuleSpec/TOKEN_REF/text()='OTHER_IDENTIFIER']/text()" | \
 	grep -E "'[a-zA-Z]+'" > temporary.txt
-	
 cat temporary.txt | sed "s/'//g" | sed 's/$/_/' | tr [:lower:] [:upper:] > temporary2.txt
 paste -d ": " temporary2.txt temporary.txt | sed 's/$/;/' | sort -u > lexer_prods.txt
 
