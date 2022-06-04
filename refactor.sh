@@ -1,3 +1,18 @@
+#!/bin/sh
+
+# Make sure Trash is installed.
+version="`trparse --version | head -1`"
+if [[ $? != "0" ]]
+then
+	echo "You don't have Trash installed."
+	exit 1
+fi
+if [[ "$version" != "trparse 0.16.4" ]]
+then
+	echo "You don't have proper version installed."
+	exit 1
+fi
+
 # Scrape and refactor the Dart grammar from the Specification.
 # Note, you can find a "reference grammar" in Antlr that would have
 # a similar grammar to the one generated here.
