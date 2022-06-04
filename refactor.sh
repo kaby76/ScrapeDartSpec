@@ -1,4 +1,7 @@
-#
+# Scrape and refactor the Dart grammar from the Specification.
+# Note, you can find a "reference grammar" in Antlr that would have
+# a similar grammar to the one generated here.
+# https://github.com/dart-lang/sdk/blob/master/tools/spec_parser/Dart.g
 
 echo "Setting MSYS2_ARG_CONV_EXCL so that Trash XPaths do not get mutulated."
 export MSYS2_ARG_CONV_EXCL="*"
@@ -126,11 +129,13 @@ trparse temp.g4 | \
 	trsponge -c true
 grep -E "reserved_word" temp.g4
 
-# Modify the operator rule:
-# operator : '~' | binaryOperator | '[]' | '[]=' ;
+# Modify the "operator" rule.
+# The original is  "operator : '~' | binaryOperator | '[]' | '[]=' ;".
 # The problem with this rule is that the lexer symbol '[]' cannot
 # be a single token. The reason is that the for type declarations,
 # it must be parsed as '[' then ']'.
+# The "reference grammar" for dart contains just this refactoring:
+# https://github.com/dart-lang/sdk/blob/21b07646f5c85be2e8a618de753d077917b5b434/tools/spec_parser/Dart.g#L419
 trparse temp.g4 | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]\'\"\] "'[' ']'" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]=\'\"\] "'[' ']' '='" | \
