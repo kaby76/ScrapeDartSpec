@@ -198,7 +198,7 @@ cascadeSelector : '[' expression ']' | identifier ;
 cascadeSectionTail : cascadeAssignment | selector* ( assignableSelector cascadeAssignment )? ;
 cascadeAssignment : assignmentOperator expressionWithoutCascade ;
 assignmentOperator : '=' | compoundAssignmentOperator ;
-compoundAssignmentOperator : '*=' | '/=' | '~/=' | '%=' | '+=' | '-=' | '<<=' | '>>>=' | '>>=' | '&=' | '^=' | '|=' | '??=' ;
+compoundAssignmentOperator : '*=' | '/=' | '~/=' | '%=' | '+=' | '-=' | '<<=' | '>' '>' '>' '=' | '>' '>' '=' | '&=' | '^=' | '|=' | '??=' ;
 conditionalExpression : ifNullExpression ( '?' expressionWithoutCascade ':' expressionWithoutCascade )? ;
 ifNullExpression : logicalOrExpression ( '??' logicalOrExpression )* ;
 logicalOrExpression : logicalAndExpression ( '||' logicalAndExpression )* ;
@@ -212,7 +212,7 @@ bitwiseXorExpression : bitwiseAndExpression ( '^' bitwiseAndExpression )* | 'sup
 bitwiseAndExpression : shiftExpression ( '&' shiftExpression )* | 'super' ( '&' shiftExpression )+ ;
 bitwiseOperator : '&' | '^' | '|' ;
 shiftExpression : additiveExpression ( shiftOperator additiveExpression )* | 'super' ( shiftOperator additiveExpression )+ ;
-shiftOperator : '<<' | '>>>' | '>>' ;
+shiftOperator : '<<' | '>' '>' '>' | '>' '>' ;
 additiveExpression : multiplicativeExpression ( additiveOperator multiplicativeExpression )* | 'super' ( additiveOperator multiplicativeExpression )+ ;
 additiveOperator : '+' | '-' ;
 multiplicativeExpression : unaryExpression ( multiplicativeOperator unaryExpression )* | 'super' ( multiplicativeOperator unaryExpression )+ ;

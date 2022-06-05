@@ -156,6 +156,14 @@ trparse temp.g4 | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]=\'\"\] "'[' ']' '='" | \
 	trsponge -c true
 
+# Modify the shiftOperator and compoundAssignmentOperator rules.
+trparse temp.g4 | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\'\"\] "'>' '>'" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>\'\"\] "'>' '>' '>'" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>=\'\"\] "'>' '>' '='" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>=\'\"\] "'>' '>' '>' '='" | \
+	trsponge -c true
+	
 # Get all string literals that aren't part of a fragment. We'll use
 # that as a preliminary list of keywords.
 # Note, if the rule is a fragment lexer rule, don't bother collecting
