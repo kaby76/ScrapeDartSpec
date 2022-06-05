@@ -27,7 +27,7 @@ rm -rf xxx
 mkdir xxx
 cd xxx
 
-../tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file ../specs/spec-grammar-2-15-dev.tex > temp.g4
+../tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file ../specs/dartLangSpec.tex > temp.g4
 dos2unix temp.g4
 cp temp.g4 ../orig.g4
 
@@ -192,8 +192,9 @@ trparse temp.g4 | \
 	trsponge -c true
 
 # Same thing.
+# Add in 'dynamic'.
 trparse temp.g4 | \
-	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield'" | \
+	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic'" | \
 	trsponge -c true
 
 # Cannot handle sciptTag. Just nuke.
