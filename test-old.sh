@@ -1,20 +1,38 @@
 #!/bin/sh
 
-rm -rf reference
-mkdir reference
-cp -r ~/g-current/grammars-v4/dart2/* reference/
-pushd reference
-trgen
-cd Generated
-make
-popd
+if [[ ! -d test ]]
+then
+	mkdir test
+fi
+
+cd test
+
+if [[ ! -d sdk ]]
+then
+	git clone --depth 1 --filter=blob:none --no-checkout https://github.com/dart-lang/sdk.git
+	pushd sdk
+	git checkout main -- sdk/lib
+	popd
+fi
+
+if [[ ! -d grammars-v4 ]]
+then
+	git clone --depth 1 --filter=blob:none --no-checkout https://github.com/antlr/grammars-v4.git
+	pushd grammars-v4
+	git checkout master -- dart2
+	cd dart2
+	trgen
+	cd Generated
+	make
+	popd
+fi
 
 ok=0
 total=0
-for i in `find ../sdk/sdk/lib/ -name '*.dart'`
+for i in `find ./sdk/sdk/lib/ -name '*.dart'`
 do
 echo -n "$i "
-./reference/Generated/bin/Debug/net6.0/Test.exe -file $i > /dev/null 2>&1
+./grammars-v4/dart2/Generated/bin/Debug/net6.0/Test.exe -file $i > /dev/null 2>&1
 x=$?
 echo $x
 if [ $x = 0 ]
