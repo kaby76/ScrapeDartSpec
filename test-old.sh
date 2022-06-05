@@ -29,7 +29,7 @@ fi
 
 ok=0
 total=0
-for i in `find ./sdk/sdk/lib/ -name '*.dart'`
+for i in `find sdk/sdk/lib/ -name '*.dart'`
 do
 	echo -n "$i "
 	./grammars-v4/dart2/Generated/bin/Debug/net6.0/Test.exe -file $i > /dev/null 2>&1
