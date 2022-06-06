@@ -188,9 +188,14 @@ trparse temp.g4 | \
 trparse temp.g4 | \
 	trreplace "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef'" | \
 	trsponge -c true
+
 trparse temp.g4 | \
-	trreplace "//parserRuleSpec[RULE_REF/text()='identifier']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef'" | \
+	trreplace "//parserRuleSpec[RULE_REF/text()='identifier']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' | 'Function'" | \
 	trsponge -c true
+trparse temp.g4 | \
+	trinsert "//parserRuleSpec[RULE_REF/text()='typeIdentifier']//SEMI" "| 'Function'" | \
+	trsponge -c true
+
 
 # Same thing.
 # Add in 'dynamic'.

@@ -233,8 +233,8 @@ assignableExpression : primary assignableSelectorPart | 'super' unconditionalAss
 assignableSelectorPart : selector* assignableSelector ;
 unconditionalAssignableSelector : '[' expression ']' | '.' identifier ;
 assignableSelector : unconditionalAssignableSelector | '?.' identifier | '?' '[' expression ']' ;
-identifier : IDENTIFIER | 'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' | 'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' ;
-typeIdentifier : IDENTIFIER | 'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' ;
+identifier : IDENTIFIER | 'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' | 'Function' | 'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' ;
+typeIdentifier : IDENTIFIER | 'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' | 'Function';
 qualifiedName : typeIdentifier '.' identifier | typeIdentifier '.' typeIdentifier '.' identifier ;
 fragment BUILT_IN_IDENTIFIER : 'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' ;
 fragment OTHER_IDENTIFIER : 'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' ;
