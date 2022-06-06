@@ -6,7 +6,7 @@ varOrType : 'var' | type ;
 initializedVariableDeclaration : declaredIdentifier ( '=' expression )? ( ',' initializedIdentifier )* ;
 initializedIdentifier : identifier ( '=' expression )? ;
 initializedIdentifierList : initializedIdentifier ( ',' initializedIdentifier )* ;
-functionSignature : type? identifier formalParameterPart ;
+functionSignature : metadata type? identifier formalParameterPart ;
 formalParameterPart : typeParameters? formalParameterList ;
 functionBody : 'async'? '=>' expression ';' | ( 'async' '*'? | 'sync' '*' )? block ;
 block : '{' statements '}' ;
