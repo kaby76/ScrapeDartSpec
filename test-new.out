@@ -10,7 +10,7 @@ Rendering template file from CSharp/tester.psm1 to Generated/tester.psm1
 Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/temp.g4 to Generated/temp.g4
 dotnet restore
   Determining projects to restore...
-  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 349 ms).
+  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 347 ms).
 dotnet build
 Microsoft (R) Build Engine version 17.2.0+41abc5629 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,16 +23,16 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:05.30
+Time Elapsed 00:00:04.76
 ~/dart/ScrapeDartSpec/test
 sdk/sdk/lib/async/async.dart 0
 sdk/sdk/lib/async/async_error.dart 0
 sdk/sdk/lib/async/broadcast_stream_controller.dart 0
-sdk/sdk/lib/async/deferred_load.dart 1
+sdk/sdk/lib/async/deferred_load.dart 0
 sdk/sdk/lib/async/future.dart 1
 sdk/sdk/lib/async/future_impl.dart 0
 sdk/sdk/lib/async/schedule_microtask.dart 1
-sdk/sdk/lib/async/stream.dart 1
+sdk/sdk/lib/async/stream.dart 0
 sdk/sdk/lib/async/stream_controller.dart 1
 sdk/sdk/lib/async/stream_impl.dart 0
 sdk/sdk/lib/async/stream_pipe.dart 0
@@ -53,7 +53,7 @@ sdk/sdk/lib/collection/linked_list.dart 0
 sdk/sdk/lib/collection/list.dart 0
 sdk/sdk/lib/collection/maps.dart 0
 sdk/sdk/lib/collection/queue.dart 0
-sdk/sdk/lib/collection/set.dart 1
+sdk/sdk/lib/collection/set.dart 0
 sdk/sdk/lib/collection/splay_tree.dart 0
 sdk/sdk/lib/convert/ascii.dart 0
 sdk/sdk/lib/convert/base64.dart 0
@@ -71,7 +71,7 @@ sdk/sdk/lib/convert/string_conversion.dart 0
 sdk/sdk/lib/convert/utf.dart 0
 sdk/sdk/lib/core/annotations.dart 1
 sdk/sdk/lib/core/bigint.dart 0
-sdk/sdk/lib/core/bool.dart 1
+sdk/sdk/lib/core/bool.dart 0
 sdk/sdk/lib/core/comparable.dart 0
 sdk/sdk/lib/core/core.dart 0
 sdk/sdk/lib/core/date_time.dart 0
@@ -79,7 +79,7 @@ sdk/sdk/lib/core/double.dart 0
 sdk/sdk/lib/core/duration.dart 0
 sdk/sdk/lib/core/enum.dart 1
 sdk/sdk/lib/core/errors.dart 1
-sdk/sdk/lib/core/exceptions.dart 1
+sdk/sdk/lib/core/exceptions.dart 0
 sdk/sdk/lib/core/function.dart 0
 sdk/sdk/lib/core/identical.dart 1
 sdk/sdk/lib/core/int.dart 0
@@ -88,39 +88,39 @@ sdk/sdk/lib/core/iterable.dart 0
 sdk/sdk/lib/core/iterator.dart 0
 sdk/sdk/lib/core/list.dart 0
 sdk/sdk/lib/core/map.dart 0
-sdk/sdk/lib/core/null.dart 1
+sdk/sdk/lib/core/null.dart 0
 sdk/sdk/lib/core/num.dart 0
-sdk/sdk/lib/core/object.dart 1
+sdk/sdk/lib/core/object.dart 0
 sdk/sdk/lib/core/pattern.dart 0
 sdk/sdk/lib/core/print.dart 0
-sdk/sdk/lib/core/regexp.dart 1
+sdk/sdk/lib/core/regexp.dart 0
 sdk/sdk/lib/core/set.dart 0
 sdk/sdk/lib/core/sink.dart 0
 sdk/sdk/lib/core/stacktrace.dart 0
 sdk/sdk/lib/core/stopwatch.dart 0
-sdk/sdk/lib/core/string.dart 1
+sdk/sdk/lib/core/string.dart 0
 sdk/sdk/lib/core/string_buffer.dart 0
 sdk/sdk/lib/core/string_sink.dart 0
 sdk/sdk/lib/core/symbol.dart 0
 sdk/sdk/lib/core/type.dart 0
 sdk/sdk/lib/core/uri.dart 0
-sdk/sdk/lib/core/weak.dart 1
+sdk/sdk/lib/core/weak.dart 0
 sdk/sdk/lib/developer/developer.dart 0
 sdk/sdk/lib/developer/extension.dart 1
 sdk/sdk/lib/developer/profiler.dart 0
 sdk/sdk/lib/developer/service.dart 0
 sdk/sdk/lib/developer/timeline.dart 1
-sdk/sdk/lib/ffi/abi.dart 1
-sdk/sdk/lib/ffi/abi_specific.dart 1
+sdk/sdk/lib/ffi/abi.dart 0
+sdk/sdk/lib/ffi/abi_specific.dart 0
 sdk/sdk/lib/ffi/allocation.dart 1
 sdk/sdk/lib/ffi/annotations.dart 0
-sdk/sdk/lib/ffi/c_type.dart 1
+sdk/sdk/lib/ffi/c_type.dart 0
 sdk/sdk/lib/ffi/dynamic_library.dart 0
 sdk/sdk/lib/ffi/ffi.dart 0
-sdk/sdk/lib/ffi/native_finalizer.dart 1
-sdk/sdk/lib/ffi/native_type.dart 1
-sdk/sdk/lib/ffi/struct.dart 1
-sdk/sdk/lib/ffi/union.dart 1
+sdk/sdk/lib/ffi/native_finalizer.dart 0
+sdk/sdk/lib/ffi/native_type.dart 0
+sdk/sdk/lib/ffi/struct.dart 0
+sdk/sdk/lib/ffi/union.dart 0
 sdk/sdk/lib/html/dart2js/html_dart2js.dart 1
 sdk/sdk/lib/html/dartium/nativewrappers.dart 0
 sdk/sdk/lib/html/html_common/conversions.dart 0
@@ -145,30 +145,30 @@ sdk/sdk/lib/internal/lowering.dart 0
 sdk/sdk/lib/internal/patch.dart 0
 sdk/sdk/lib/internal/print.dart 0
 sdk/sdk/lib/internal/sort.dart 0
-sdk/sdk/lib/internal/symbol.dart 1
-sdk/sdk/lib/io/common.dart 1
+sdk/sdk/lib/internal/symbol.dart 0
+sdk/sdk/lib/io/common.dart 0
 sdk/sdk/lib/io/data_transformer.dart 0
-sdk/sdk/lib/io/directory.dart 1
+sdk/sdk/lib/io/directory.dart 0
 sdk/sdk/lib/io/directory_impl.dart 0
-sdk/sdk/lib/io/embedder_config.dart 1
+sdk/sdk/lib/io/embedder_config.dart 0
 sdk/sdk/lib/io/eventhandler.dart 0
-sdk/sdk/lib/io/file.dart 1
-sdk/sdk/lib/io/file_impl.dart 1
+sdk/sdk/lib/io/file.dart 0
+sdk/sdk/lib/io/file_impl.dart 0
 sdk/sdk/lib/io/file_system_entity.dart 0
 sdk/sdk/lib/io/io.dart 0
 sdk/sdk/lib/io/io_resource_info.dart 0
 sdk/sdk/lib/io/io_service.dart 0
 sdk/sdk/lib/io/io_sink.dart 0
-sdk/sdk/lib/io/link.dart 1
+sdk/sdk/lib/io/link.dart 0
 sdk/sdk/lib/io/namespace_impl.dart 0
 sdk/sdk/lib/io/network_policy.dart 1
-sdk/sdk/lib/io/network_profiling.dart 1
+sdk/sdk/lib/io/network_profiling.dart 0
 sdk/sdk/lib/io/overrides.dart 0
 sdk/sdk/lib/io/platform.dart 0
 sdk/sdk/lib/io/platform_impl.dart 0
 sdk/sdk/lib/io/process.dart 0
 sdk/sdk/lib/io/secure_server_socket.dart 0
-sdk/sdk/lib/io/secure_socket.dart 1
+sdk/sdk/lib/io/secure_socket.dart 0
 sdk/sdk/lib/io/security_context.dart 1
 sdk/sdk/lib/io/service_object.dart 0
 sdk/sdk/lib/io/socket.dart 1
@@ -243,10 +243,10 @@ sdk/sdk/lib/_internal/js_dev_runtime/private/foreign_helper.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/identity_hash_map.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/interceptors.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/isolate_helper.dart 0
-sdk/sdk/lib/_internal/js_dev_runtime/private/js_array.dart 1
+sdk/sdk/lib/_internal/js_dev_runtime/private/js_array.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/js_helper.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/js_names.dart 0
-sdk/sdk/lib/_internal/js_dev_runtime/private/js_number.dart 1
+sdk/sdk/lib/_internal/js_dev_runtime/private/js_number.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/js_primitives.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/js_rti.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/js_string.dart 1
@@ -397,5 +397,5 @@ sdk/sdk/lib/_internal/wasm/lib/string_buffer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/string_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/timer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/type.dart 0
-Number of passed tests 301
+Number of passed tests 329
 Total parsed 372

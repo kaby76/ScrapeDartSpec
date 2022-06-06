@@ -50,6 +50,9 @@ trparse temp.g4 | \
 	trsponge -c true
 
 # Other edits.	
+trparse temp.g4 | \
+	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='classDeclaration']/COLON" " metadata" | \
+	trsponge -c true
 
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \

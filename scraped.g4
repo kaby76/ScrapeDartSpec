@@ -23,7 +23,7 @@ declaredIdentifier : 'covariant'? finalConstVarOrType identifier ;
 fieldFormalParameter : finalConstVarOrType? 'this' '.' identifier ( formalParameterPart '?'? )? ;
 defaultFormalParameter : normalFormalParameter ( '=' expression )? ;
 defaultNamedParameter : metadata 'required'? normalFormalParameterNoMetadata ( ( '=' | ':' ) expression )? ;
-classDeclaration : 'abstract'? 'class' typeIdentifier typeParameters? superclass? interfaces? '{' ( metadata classMemberDeclaration )* '}' | 'abstract'? 'class' mixinApplicationClass ;
+classDeclaration : metadata 'abstract'? 'class' typeIdentifier typeParameters? superclass? interfaces? '{' ( metadata classMemberDeclaration )* '}' | 'abstract'? 'class' mixinApplicationClass ;
 typeNotVoidList : typeNotVoid ( ',' typeNotVoid )* ;
 classMemberDeclaration : declaration ';' | methodSignature functionBody ;
 methodSignature : constructorSignature initializers? | factoryConstructorSignature | 'static'? functionSignature | 'static'? getterSignature | 'static'? setterSignature | operatorSignature ;
