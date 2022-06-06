@@ -10,7 +10,7 @@ Rendering template file from CSharp/tester.psm1 to Generated/tester.psm1
 Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/temp.g4 to Generated/temp.g4
 dotnet restore
   Determining projects to restore...
-  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 341 ms).
+  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 338 ms).
 dotnet build
 Microsoft (R) Build Engine version 17.2.0+41abc5629 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,7 +23,7 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:06.82
+Time Elapsed 00:00:04.77
 ~/dart/ScrapeDartSpec/test
 sdk/sdk/lib/async/async.dart 0
 sdk/sdk/lib/async/async_error.dart 0
@@ -315,7 +315,7 @@ sdk/sdk/lib/_internal/vm/bin/vmservice_server.dart 1
 sdk/sdk/lib/_internal/vm/lib/array.dart 0
 sdk/sdk/lib/_internal/vm/lib/array_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/async_patch.dart 0
-sdk/sdk/lib/_internal/vm/lib/bigint_patch.dart 1
+sdk/sdk/lib/_internal/vm/lib/bigint_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/bool_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/class_id_fasta.dart 0
 sdk/sdk/lib/_internal/vm/lib/collection_patch.dart 0
@@ -343,14 +343,14 @@ sdk/sdk/lib/_internal/vm/lib/growable_array.dart 0
 sdk/sdk/lib/_internal/vm/lib/hash_factories.dart 0
 sdk/sdk/lib/_internal/vm/lib/identical_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/immutable_map.dart 0
-sdk/sdk/lib/_internal/vm/lib/integers.dart 1
+sdk/sdk/lib/_internal/vm/lib/integers.dart 0
 sdk/sdk/lib/_internal/vm/lib/integers_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/internal_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/invocation_mirror_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/isolate_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/lib_prefix.dart 0
 sdk/sdk/lib/_internal/vm/lib/map_patch.dart 0
-sdk/sdk/lib/_internal/vm/lib/math_patch.dart 1
+sdk/sdk/lib/_internal/vm/lib/math_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/mirrors_impl.dart 0
 sdk/sdk/lib/_internal/vm/lib/mirrors_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/mirror_reference.dart 0
@@ -384,11 +384,11 @@ sdk/sdk/lib/_internal/wasm/lib/function.dart 0
 sdk/sdk/lib/_internal/wasm/lib/growable_list.dart 0
 sdk/sdk/lib/_internal/wasm/lib/hash_factories.dart 0
 sdk/sdk/lib/_internal/wasm/lib/identical_patch.dart 0
-sdk/sdk/lib/_internal/wasm/lib/int.dart 1
+sdk/sdk/lib/_internal/wasm/lib/int.dart 0
 sdk/sdk/lib/_internal/wasm/lib/internal_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/js_util_wasm_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/list.dart 0
-sdk/sdk/lib/_internal/wasm/lib/math_patch.dart 1
+sdk/sdk/lib/_internal/wasm/lib/math_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/object_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/print_patch.dart 0
@@ -397,5 +397,5 @@ sdk/sdk/lib/_internal/wasm/lib/string_buffer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/string_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/timer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/type.dart 0
-Number of passed tests 292
+Number of passed tests 297
 Total parsed 372

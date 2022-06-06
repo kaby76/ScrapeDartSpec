@@ -206,7 +206,7 @@ logicalAndExpression : equalityExpression ( '&&' equalityExpression )* ;
 equalityExpression : relationalExpression ( equalityOperator relationalExpression )? | 'super' equalityOperator relationalExpression ;
 equalityOperator : '==' | '!=' ;
 relationalExpression : bitwiseOrExpression ( typeTest | typeCast | relationalOperator bitwiseOrExpression )? | 'super' relationalOperator bitwiseOrExpression ;
-relationalOperator : '>=' | '>' | '<=' | '<' ;
+relationalOperator : '>' '=' | '>' | '<=' | '<' ;
 bitwiseOrExpression : bitwiseXorExpression ( '|' bitwiseXorExpression )* | 'super' ( '|' bitwiseXorExpression )+ ;
 bitwiseXorExpression : bitwiseAndExpression ( '^' bitwiseAndExpression )* | 'super' ( '^' bitwiseAndExpression )+ ;
 bitwiseAndExpression : shiftExpression ( '&' shiftExpression )* | 'super' ( '&' shiftExpression )+ ;

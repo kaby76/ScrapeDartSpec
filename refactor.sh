@@ -162,6 +162,7 @@ trparse temp.g4 | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>\'\"\] "'>' '>' '>'" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>=\'\"\] "'>' '>' '='" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>=\'\"\] "'>' '>' '>' '='" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'relationalOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>=\'\"\] "'>' '='" | \
 	trsponge -c true
 	
 # Get all string literals that aren't part of a fragment. We'll use
