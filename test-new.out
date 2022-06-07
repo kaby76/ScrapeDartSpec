@@ -10,7 +10,7 @@ Rendering template file from CSharp/tester.psm1 to Generated/tester.psm1
 Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/temp.g4 to Generated/temp.g4
 dotnet restore
   Determining projects to restore...
-  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 337 ms).
+  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 340 ms).
 dotnet build
 Microsoft (R) Build Engine version 17.2.0+41abc5629 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,7 +23,7 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:04.84
+Time Elapsed 00:00:04.71
 ~/dart/ScrapeDartSpec/test
 sdk/sdk/lib/async/async.dart 0
 sdk/sdk/lib/async/async_error.dart 0
@@ -33,7 +33,7 @@ sdk/sdk/lib/async/future.dart 0
 sdk/sdk/lib/async/future_impl.dart 0
 sdk/sdk/lib/async/schedule_microtask.dart 0
 sdk/sdk/lib/async/stream.dart 0
-sdk/sdk/lib/async/stream_controller.dart 1
+sdk/sdk/lib/async/stream_controller.dart 0
 sdk/sdk/lib/async/stream_impl.dart 0
 sdk/sdk/lib/async/stream_pipe.dart 0
 sdk/sdk/lib/async/stream_transformers.dart 0
@@ -169,9 +169,9 @@ sdk/sdk/lib/io/platform_impl.dart 0
 sdk/sdk/lib/io/process.dart 0
 sdk/sdk/lib/io/secure_server_socket.dart 0
 sdk/sdk/lib/io/secure_socket.dart 0
-sdk/sdk/lib/io/security_context.dart 1
+sdk/sdk/lib/io/security_context.dart 0
 sdk/sdk/lib/io/service_object.dart 0
-sdk/sdk/lib/io/socket.dart 1
+sdk/sdk/lib/io/socket.dart 0
 sdk/sdk/lib/io/stdio.dart 1
 sdk/sdk/lib/io/string_transformer.dart 0
 sdk/sdk/lib/io/sync_socket.dart 0
@@ -397,5 +397,5 @@ sdk/sdk/lib/_internal/wasm/lib/string_buffer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/string_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/timer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/type.dart 0
-Number of passed tests 350
+Number of passed tests 353
 Total parsed 372

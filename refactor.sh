@@ -59,6 +59,11 @@ trparse temp.g4 | \
 trparse temp.g4 | \
 	trreplace "//ruleSpec/parserRuleSpec[RULE_REF/text()='partDeclaration']/ruleBlock//element[atom/ruleref/RULE_REF/text()='topLevelDeclaration']" " (metadata topLevelDeclaration)*" | \
 	trsponge -c true
+# HACK!!!
+trparse temp.g4 | \
+	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/COLON" "'abstract'? (" | \
+	trinsert "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/SEMI" ")" | \
+	trsponge -c true
 
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
