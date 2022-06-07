@@ -148,10 +148,12 @@ SingleLineString
 fragment StringContentDQ
   : ~('\\' | '"' | '\n' | '\r')
   | '\\' ~('\n' | '\r')
+  | '${' StringContentDQ*? '}'  
   ;
 fragment StringContentSQ
   : ~('\\' | '\'' | '\n' | '\r')
   | '\\' ~('\n' | '\r')
+  | '${' StringContentSQ*? '}'
   ;
 MultiLineString
   : '"""' StringContentTDQ* '"""'
@@ -170,8 +172,6 @@ fragment StringContentTSQ
 fragment ESCAPE_SEQUENCE : '\n' | '\r' | '\\f' | '\\b' | '\t' | '\\v' | '\\x' HEX_DIGIT HEX_DIGIT | '\\u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT | '\\u{' HEX_DIGIT_SEQUENCE '}' ;
 fragment HEX_DIGIT_SEQUENCE : HEX_DIGIT HEX_DIGIT? HEX_DIGIT? HEX_DIGIT? HEX_DIGIT? HEX_DIGIT? ;
 fragment NEWLINE : '\n' | '\r' | '\r\n' ;
-stringInterpolation : SIMPLE_STRING_INTERPOLATION | '${' expression '}' ;
-SIMPLE_STRING_INTERPOLATION : '$' ( IDENTIFIER_NO_DOLLAR | 'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' | 'this' ) ;
 symbolLiteral : '#' ( identifier ( '.' identifier )* | operator | 'void' ) ;
 listLiteral : 'const'? typeArguments? '[' elements? ']' ;
 setOrMapLiteral : 'const'? typeArguments? '{' elements? '}' ;

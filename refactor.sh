@@ -125,10 +125,12 @@ SingleLineString
 fragment StringContentDQ
   : ~('\\\\' | '\"' | '\n' | '\r')
   | '\\\\' ~('\n' | '\r')
+  | '\${' StringContentDQ*? '}'  
   ;
 fragment StringContentSQ
   : ~('\\\\' | '\'' | '\n' | '\r')
   | '\\\\' ~('\n' | '\r')
+  | '\${' StringContentSQ*? '}'
   ;
 MultiLineString
   : '\"\"\"' StringContentTDQ* '\"\"\"'
@@ -147,6 +149,10 @@ fragment StringContentTSQ
 " | \
 	trsponge -c true
 
+trparse temp.g4 | \
+	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringInterpolation']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']" | \
+	trsponge -c true
 
 # Get rid of blank lines. This can happen when we insert or delete
 # rules.
