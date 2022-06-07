@@ -50,11 +50,14 @@ trparse temp.g4 | \
 	trsponge -c true
 
 # Other edits.	
+#trparse temp.g4 | \
+#	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='classDeclaration']/COLON" " metadata" | \
+#	trsponge -c true
+#trparse temp.g4 | \
+#	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionSignature']/COLON" " metadata" | \
+#	trsponge -c true
 trparse temp.g4 | \
-	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='classDeclaration']/COLON" " metadata" | \
-	trsponge -c true
-trparse temp.g4 | \
-	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionSignature']/COLON" " metadata" | \
+	trreplace "//ruleSpec/parserRuleSpec[RULE_REF/text()='partDeclaration']/ruleBlock//element[atom/ruleref/RULE_REF/text()='topLevelDeclaration']" " (metadata topLevelDeclaration)*" | \
 	trsponge -c true
 
 trparse temp.g4 | \
