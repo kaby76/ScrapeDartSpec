@@ -64,7 +64,12 @@ trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/COLON" "'abstract'? (" | \
 	trinsert "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/SEMI" ")" | \
 	trsponge -c true
+# HACK!!!
+trparse temp.g4 | \
+	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionBody']/COLON" "'native' ';' | " | \
+	trsponge -c true
 
+	
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
 	trsponge -c true
