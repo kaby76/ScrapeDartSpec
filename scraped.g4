@@ -140,15 +140,18 @@ stringLiteral : ( multilineString | singleLineString )+ ;
 multilineString : MultiLineString;
 singleLineString : SingleLineString;
 SingleLineString
-  : '"' StringContentDQ* '"'
+  : StringDQ
   | '\'' StringContentSQ* '\''
   | 'r\'' (~('\'' | '\n' | '\r'))* '\''
   | 'r"' (~('"' | '\n' | '\r'))* '"'
   ;
+fragment StringDQ : '"' StringContentDQ*? '"' ;
 fragment StringContentDQ
-  : ~('\\' | '"' | '\n' | '\r')
+  : ~('\\' | '"' | '\n' | '\r' | '$')
   | '\\' ~('\n' | '\r')
+  | StringDQ
   | '${' StringContentDQ*? '}'  
+  | '$' IDENTIFIER_NO_DOLLAR
   ;
 fragment StringContentSQ
   : ~('\\' | '\'' | '\n' | '\r')

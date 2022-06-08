@@ -10,7 +10,7 @@ Rendering template file from CSharp/tester.psm1 to Generated/tester.psm1
 Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/temp.g4 to Generated/temp.g4
 dotnet restore
   Determining projects to restore...
-  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 330 ms).
+  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 382 ms).
 dotnet build
 Microsoft (R) Build Engine version 17.2.0+41abc5629 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,7 +23,7 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:04.76
+Time Elapsed 00:00:06.93
 ~/dart/ScrapeDartSpec/test
 sdk/sdk/lib/async/async.dart 0
 sdk/sdk/lib/async/async_error.dart 0
@@ -78,7 +78,7 @@ sdk/sdk/lib/core/date_time.dart 0
 sdk/sdk/lib/core/double.dart 0
 sdk/sdk/lib/core/duration.dart 0
 sdk/sdk/lib/core/enum.dart 0
-sdk/sdk/lib/core/errors.dart 1
+sdk/sdk/lib/core/errors.dart 0
 sdk/sdk/lib/core/exceptions.dart 0
 sdk/sdk/lib/core/function.dart 0
 sdk/sdk/lib/core/identical.dart 0
@@ -172,7 +172,7 @@ sdk/sdk/lib/io/secure_socket.dart 0
 sdk/sdk/lib/io/security_context.dart 0
 sdk/sdk/lib/io/service_object.dart 0
 sdk/sdk/lib/io/socket.dart 0
-sdk/sdk/lib/io/stdio.dart 1
+sdk/sdk/lib/io/stdio.dart 0
 sdk/sdk/lib/io/string_transformer.dart 0
 sdk/sdk/lib/io/sync_socket.dart 0
 sdk/sdk/lib/isolate/capability.dart 0
@@ -273,7 +273,7 @@ sdk/sdk/lib/_internal/js_runtime/lib/internal_patch.dart 0
 sdk/sdk/lib/_internal/js_runtime/lib/io_patch.dart 0
 sdk/sdk/lib/_internal/js_runtime/lib/isolate_patch.dart 0
 sdk/sdk/lib/_internal/js_runtime/lib/js_array.dart 0
-sdk/sdk/lib/_internal/js_runtime/lib/js_helper.dart 1
+sdk/sdk/lib/_internal/js_runtime/lib/js_helper.dart 0
 sdk/sdk/lib/_internal/js_runtime/lib/js_names.dart 0
 sdk/sdk/lib/_internal/js_runtime/lib/js_number.dart 0
 sdk/sdk/lib/_internal/js_runtime/lib/js_patch.dart 0
@@ -328,7 +328,7 @@ sdk/sdk/lib/_internal/vm/lib/developer.dart 0
 sdk/sdk/lib/_internal/vm/lib/double.dart 0
 sdk/sdk/lib/_internal/vm/lib/double_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/empty_source.dart 0
-sdk/sdk/lib/_internal/vm/lib/errors_patch.dart 1
+sdk/sdk/lib/_internal/vm/lib/errors_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/expando_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/ffi_allocation_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/ffi_dynamic_library_patch.dart 0
@@ -397,5 +397,5 @@ sdk/sdk/lib/_internal/wasm/lib/string_buffer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/string_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/timer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/type.dart 0
-Number of passed tests 353
+Number of passed tests 357
 Total parsed 372
