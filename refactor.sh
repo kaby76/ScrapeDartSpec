@@ -123,7 +123,7 @@ multilineString : MultiLineString;
 singleLineString : SingleLineString;
 SingleLineString
   : StringDQ
-  | '\'' StringContentSQ* '\''
+  | StringSQ
   | 'r\'' (~('\'' | '\n' | '\r'))* '\''
   | 'r\"' (~('\"' | '\n' | '\r'))* '\"'
   ;
@@ -135,10 +135,13 @@ fragment StringContentDQ
   | '\${' StringContentDQ*? '}'  
   | '\$' IDENTIFIER_NO_DOLLAR
   ;
+fragment StringSQ : '\'' StringContentSQ*? '\'' ;
 fragment StringContentSQ
-  : ~('\\\\' | '\'' | '\n' | '\r')
+  : ~('\\\\' | '\'' | '\n' | '\r' | '\$')
   | '\\\\' ~('\n' | '\r')
+  | StringSQ
   | '\${' StringContentSQ*? '}'
+  | '\$' IDENTIFIER_NO_DOLLAR
   ;
 MultiLineString
   : '\"\"\"' StringContentTDQ* '\"\"\"'
