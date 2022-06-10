@@ -231,7 +231,7 @@ trparse temp.g4 | \
 # Same thing.
 # Add in 'dynamic'.
 trparse temp.g4 | \
-	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic'" | \
+	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' | 'native'" | \
 	trsponge -c true
 
 # Cannot handle sciptTag. Just nuke.
@@ -251,7 +251,8 @@ trparse temp.g4 | \
 " | \
 	trsponge -c true
 
-
+echo Sorting grammar, wait...
+trparse temp.g4 | trsort | trsponge -c true
 
 rm -f lexer_prods.txt temporary.txt temporary2.txt
 
