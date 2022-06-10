@@ -133,7 +133,7 @@ fragment StringContentDQ
   | '\\\\' ~('\n' | '\r')
   | StringDQ
   | '\${' StringContentDQ*? '}'  
-  | '\$' IDENTIFIER_NO_DOLLAR
+  | '\$'
   ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
 fragment StringContentSQ
@@ -141,7 +141,7 @@ fragment StringContentSQ
   | '\\\\' ~('\n' | '\r')
   | StringSQ
   | '\${' StringContentSQ*? '}'
-  | '\$' IDENTIFIER_NO_DOLLAR
+  | '\$'
   ;
 MultiLineString
   : '\"\"\"' StringContentTDQ* '\"\"\"'
