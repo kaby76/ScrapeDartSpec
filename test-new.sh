@@ -17,7 +17,7 @@ fi
 
 rm -rf scraped
 mkdir scraped
-cp ../scraped.g4 scraped/temp.g4
+cp ../Dart2.g4 scraped/
 pushd scraped
 trgen -t CSharp -s compilationUnit
 cd Generated

@@ -7,10 +7,10 @@ Rendering template file from CSharp/Program.cs to Generated/Program.cs
 Rendering template file from CSharp/Test.csproj to Generated/Test.csproj
 Rendering template file from CSharp/test.sh to Generated/test.sh
 Rendering template file from CSharp/tester.psm1 to Generated/tester.psm1
-Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/temp.g4 to Generated/temp.g4
+Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/Dart2.g4 to Generated/Dart2.g4
 dotnet restore
   Determining projects to restore...
-  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 357 ms).
+  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 335 ms).
 dotnet build
 Microsoft (R) Build Engine version 17.2.0+41abc5629 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,7 +23,7 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:04.84
+Time Elapsed 00:00:04.61
 ~/dart/ScrapeDartSpec/test
 sdk/sdk/lib/async/async.dart 0
 sdk/sdk/lib/async/async_error.dart 0
@@ -232,7 +232,7 @@ sdk/sdk/lib/_internal/js_dev_runtime/patch/typed_data_patch.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/annotations.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/custom_hash_map.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/classes.dart 0
-sdk/sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/errors.dart 1
+sdk/sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/errors.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/operations.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/rtti.dart 0
 sdk/sdk/lib/_internal/js_dev_runtime/private/ddc_runtime/runtime.dart 0
@@ -307,7 +307,7 @@ sdk/sdk/lib/_internal/vm/bin/namespace_patch.dart 0
 sdk/sdk/lib/_internal/vm/bin/platform_patch.dart 0
 sdk/sdk/lib/_internal/vm/bin/process_patch.dart 0
 sdk/sdk/lib/_internal/vm/bin/secure_socket_patch.dart 0
-sdk/sdk/lib/_internal/vm/bin/socket_patch.dart 1
+sdk/sdk/lib/_internal/vm/bin/socket_patch.dart 0
 sdk/sdk/lib/_internal/vm/bin/stdio_patch.dart 0
 sdk/sdk/lib/_internal/vm/bin/sync_socket_patch.dart 0
 sdk/sdk/lib/_internal/vm/bin/vmservice_io.dart 0
@@ -319,7 +319,7 @@ sdk/sdk/lib/_internal/vm/lib/bigint_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/bool_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/class_id_fasta.dart 0
 sdk/sdk/lib/_internal/vm/lib/collection_patch.dart 0
-sdk/sdk/lib/_internal/vm/lib/compact_hash.dart 1
+sdk/sdk/lib/_internal/vm/lib/compact_hash.dart 0
 sdk/sdk/lib/_internal/vm/lib/convert_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/core_patch.dart 0
 sdk/sdk/lib/_internal/vm/lib/date_patch.dart 0
@@ -397,5 +397,5 @@ sdk/sdk/lib/_internal/wasm/lib/string_buffer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/string_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/timer_patch.dart 0
 sdk/sdk/lib/_internal/wasm/lib/type.dart 0
-Number of passed tests 369
+Number of passed tests 372
 Total parsed 372

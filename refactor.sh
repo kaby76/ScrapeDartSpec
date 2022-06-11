@@ -27,11 +27,40 @@ rm -rf xxx
 mkdir xxx
 cd xxx
 
-../tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file ../specs/dartLangSpec.tex > temp.g4
+../tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file ../specs/dartLangSpec.tex > temp-temp.g4
+echo "/* Generated "`date`" EST" > temp-date.txt
+cat temp-date.txt - temp-temp.g4 << EOF > temp.g4
+ *
+ * Copyright (c) 2022 Ken Domino
+ * Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
+ * for details. All rights reserved. Use of this source code is governed by a
+ * BSD-style license that can be found in the LICENSE file.
+ *
+ * This grammar is generated from the CFG contained in:
+ * https://github.com/dart-lang/language/blob/70eb85cf9a6606a9da0de824a5d55fd06de1287f/specification/dartLangSpec.tex
+ *
+ * The bash script used to scrape and the refactor the gramamr is here:
+ * https://github.com/kaby76/ScrapeDartSpec/blob/master/refactor.sh
+ *
+ * Note: the CFG in the Specification is in development, and is for approximately
+ * Dart version 2.15. The Specification is not up-to-date vis-a-vis the actual
+ * compiler code, located here:
+ * https://github.com/dart-lang/sdk/tree/main/pkg/_fe_analyzer_shared/lib/src/parser
+ * Some of the refactorings that are applied are to bring the code into a working
+ * Antlr4 parser. Other refactorings replace some of the rules in the Spec because
+ * the Spec is incorrect, or incomplete.
+ *
+ * This grammar has been checked against a large subset (~370 Dart files) of the Dart SDK:
+ * https://github.com/dart-lang/sdk/tree/main/sdk/lib
+ * A copy of the SDK is provided in the examples for regression testing.
+ */
+EOF
+rm -f temp-date.txt temp-temp.g4
+
 dos2unix temp.g4
 cp temp.g4 ../orig.g4
 
-# First take care of fragment lexer rules.
+# Take care of fragment lexer rules.
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NEWLINE']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT']" "fragment " | \
@@ -66,7 +95,7 @@ trparse temp.g4 | \
 	trsponge -c true
 # HACK!!!
 trparse temp.g4 | \
-	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionBody']/COLON" "'native' ';' | " | \
+	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionBody']/COLON" "'native' stringLiteral? ';' | " | \
 	trsponge -c true
 
 	
@@ -133,7 +162,7 @@ fragment StringContentDQ
   | '\\\\' ~('\n' | '\r')
   | StringDQ
   | '\${' StringContentDQ*? '}'  
-  | '\$'
+  | '\$' { this.InputStream.LA(1) != '{' }?
   ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
 fragment StringContentSQ
@@ -141,11 +170,11 @@ fragment StringContentSQ
   | '\\\\' ~('\n' | '\r')
   | StringSQ
   | '\${' StringContentSQ*? '}'
-  | '\$'
+  | '\$' { this.InputStream.LA(1) != '{' }?
   ;
 MultiLineString
-  : '\"\"\"' StringContentTDQ* '\"\"\"'
-  | '\'\'\'' StringContentTSQ* '\'\'\''
+  : '\"\"\"' StringContentTDQ*? '\"\"\"'
+  | '\'\'\'' StringContentTSQ*? '\'\'\''
   | 'r\"\"\"' (~'\"' | '\"' ~'\"' | '\"\"' ~'\"')* '\"\"\"'
   | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\''
   ;
@@ -154,8 +183,9 @@ fragment StringContentTDQ
   | '\"' ~'\"' | '\"\"' ~'\"'
   ;
 fragment StringContentTSQ
-  : ~('\\\\' | '\'')
-  | '\'' ~'\'' | '\'\'' ~'\''
+  : '\'' ~'\''
+  | '\'\'' ~'\''
+  | .
   ;
 " | \
 	trsponge -c true
@@ -259,9 +289,10 @@ rm -f lexer_prods.txt temporary.txt temporary2.txt
 # TODO: split not working.
 # trparse -t antlr4 temp.g4 | trsplit | trsponge -c true
 
+mv temp.g4 Dart2.g4
 trgen -s compilationUnit
 cd Generated
 make
 
 cd ..
-cp temp.g4 ../scraped.g4
+cp Dart2.g4 ../Dart2.g4

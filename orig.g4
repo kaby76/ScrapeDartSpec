@@ -1,4 +1,29 @@
-grammar temp;
+/* Generated Sat, Jun 11, 2022 7:18:06 AM EST
+ *
+ * Copyright (c) 2022 Ken Domino
+ * Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
+ * for details. All rights reserved. Use of this source code is governed by a
+ * BSD-style license that can be found in the LICENSE file.
+ *
+ * This grammar is generated from the CFG contained in:
+ * https://github.com/dart-lang/language/blob/70eb85cf9a6606a9da0de824a5d55fd06de1287f/specification/dartLangSpec.tex
+ *
+ * The bash script used to scrape and the refactor the gramamr is here:
+ * https://github.com/kaby76/ScrapeDartSpec/blob/master/refactor.sh
+ *
+ * Note: the CFG in the Specification is in development, and is for approximately
+ * Dart version 2.15. The Specification is not up-to-date vis-a-vis the actual
+ * compiler code, located here:
+ * https://github.com/dart-lang/sdk/tree/main/pkg/_fe_analyzer_shared/lib/src/parser
+ * Some of the refactorings that are applied are to bring the code into a working
+ * Antlr4 parser. Other refactorings replace some of the rules in the Spec because
+ * the Spec is incorrect, or incomplete.
+ *
+ * This grammar has been checked against a large subset (~370 Dart files) of the Dart SDK:
+ * https://github.com/dart-lang/sdk/tree/main/sdk/lib
+ * A copy of the SDK is provided in the examples for regression testing.
+ */
+grammar Dart2;
 letExpression : 'let' staticFinalDeclarationList 'in' expression ;
 finalConstVarOrType : 'late'? 'final' type? | 'const' type? | 'late'? varOrType ;
 varOrType : 'var' | type ;

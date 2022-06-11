@@ -48,7 +48,7 @@
                 System.Console.WriteLine("error in parse.");
                 throw new Exception();
             }
-	    System.Console.WriteLine("grammar temp;");
+	    System.Console.WriteLine("grammar Dart2;");
             var walker = new ParseTreeWalker();
             var listener = new Listen();
             walker.Walk(listener, tree);

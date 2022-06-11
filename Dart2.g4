@@ -1,4 +1,4 @@
-/* Generated Sat, Jun 11, 2022 7:15:37 AM EST
+/* Generated Sat, Jun 11, 2022 7:18:06 AM EST
  *
  * Copyright (c) 2022 Ken Domino
  * Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
@@ -23,7 +23,7 @@
  * https://github.com/dart-lang/sdk/tree/main/sdk/lib
  * A copy of the SDK is provided in the examples for regression testing.
  */
-grammar temp;
+grammar Dart2;
 additiveExpression : multiplicativeExpression ( additiveOperator multiplicativeExpression )* | 'super' ( additiveOperator multiplicativeExpression )+ ;
 additiveOperator : '+' | '-' ;
 argumentList : namedArgument ( ',' namedArgument )* | expressionList ( ',' namedArgument )* ;
