@@ -162,7 +162,7 @@ fragment StringContentDQ
   | '\\\\' ~('\n' | '\r')
   | StringDQ
   | '\${' StringContentDQ*? '}'  
-  | '\$' { this.InputStream.LA(1) != '{' }?
+  | '\$' { CheckNotOpenBrace() }?
   ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
 fragment StringContentSQ
@@ -170,7 +170,7 @@ fragment StringContentSQ
   | '\\\\' ~('\n' | '\r')
   | StringSQ
   | '\${' StringContentSQ*? '}'
-  | '\$' { this.InputStream.LA(1) != '{' }?
+  | '\$' { CheckNotOpenBrace() }?
   ;
 MultiLineString
   : '\"\"\"' StringContentTDQ*? '\"\"\"'
@@ -237,6 +237,64 @@ trparse temp.g4 | \
 cat temporary.txt | sed "s/'//g" | sed 's/$/_/' | tr [:lower:] [:upper:] > temporary2.txt
 paste -d ": " temporary2.txt temporary.txt | sed 's/$/;/' | sort -u > lexer_prods.txt
 
+# Add in any other lexer rules here.
+cat - lexer_prods.txt << EOF > txx.txt
+A: '&';
+AA: '&&';
+AE: '&=';
+AT: '@';
+C: ',';
+CB: ']';
+CBC: '}';
+CIR: '^';
+CIRE: '^=';
+CO: ':';
+CP: ')';
+D: '.';
+DD: '..';
+DDD: '...';
+DDDQ: '...?';
+EE: '==';
+EG: '=>';
+EQ: '=';
+GT: '>';
+LT: '<';
+LTE: '<=';
+LTLT: '<<';
+LTLTE: '<<=';
+ME: '-=';
+MINUS: '-';
+MM: '--';
+NE: '!=';
+NOT: '!';
+OB: '[';
+OBC: '{';
+OP: '(';
+P: '|';
+PC: '%';
+PE: '%=';
+PL: '+';
+PLE: '+=';
+PLPL: '++';
+PO: '#';
+POE: '|=';
+PP: '||';
+QU: '?';
+QUD: '?.';
+QUDD: '?..';
+QUQU: '??';
+QUQUEQ: '??=';
+SC: ';';
+SE: '/=';
+SL: '/';
+SQS: '~/';
+SQSE: '~/=';
+SQUIG: '~';
+ST: '*';
+STE: '*=';
+EOF
+mv txx.txt lexer_prods.txt
+
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NUMBER']" "`cat lexer_prods.txt`" | \
 	trsponge -c true
@@ -284,15 +342,43 @@ trparse temp.g4 | \
 echo Sorting grammar, wait...
 trparse temp.g4 | trsort | trsponge -c true
 
+# Make sure the symbols in parser rules are made into token names.
+# Hardwire a bunch in.
+#trparse temp.g4 | \
+#	trxgrep "//STRING_LITERAL[not(ancestor::lexerRuleSpec/FRAGMENT) or ancestor::lexerRuleSpec/TOKEN_REF/text()='BUILT_IN_IDENTIFIER' or ancestor::lexerRuleSpec/TOKEN_REF/text()='OTHER_IDENTIFIER']/text()" | \
+#	grep -E "'[^a-zA-Z_]+'" | sort -u > t2.txt
+#cat t2.txt | sed "s/'//g" > t3.txt
+#paste -d ": " t3.txt t2.txt | sed 's/$/;/' | sort -u > more_lexer_prods.txt
+
 rm -f lexer_prods.txt temporary.txt temporary2.txt
 
-# TODO: split not working.
-# trparse -t antlr4 temp.g4 | trsplit | trsponge -c true
+trparse temp.g4 | \
+	trfoldlit | trsponge -c
 
 mv temp.g4 Dart2.g4
+cp Dart2.g4 ..
+
+# Split.
+trparse -t antlr4 Dart2.g4 | trsplit | trsponge -c true
+rm Dart2.g4
+
+# Add options.
+trparse Dart2Lexer.g4 | \
+	trinsert "//rules" "
+options { superClass=Dart2LexerBase; }
+" | \
+	trsponge -c true
+
+# Validate before "releasing".
+cp -r ../support/* .
 trgen -s compilationUnit
 cd Generated
 make
 
+if [[ $? != "0" ]]
+then
+	echo Not valid.
+fi
 cd ..
-cp Dart2.g4 ../Dart2.g4
+cp Dart2Parser.g4 ..
+cp Dart2Lexer.g4 ..

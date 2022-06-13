@@ -7,10 +7,12 @@ Rendering template file from CSharp/Program.cs to Generated/Program.cs
 Rendering template file from CSharp/Test.csproj to Generated/Test.csproj
 Rendering template file from CSharp/test.sh to Generated/test.sh
 Rendering template file from CSharp/tester.psm1 to Generated/tester.psm1
-Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/Dart2.g4 to Generated/Dart2.g4
+Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/Dart2Parser.g4 to Generated/Dart2Parser.g4
+Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/Dart2Lexer.g4 to Generated/Dart2Lexer.g4
+Copying source file from C:/msys64/home/Kenne/dart/ScrapeDartSpec/test/scraped/CSharp/Dart2LexerBase.cs to Generated/Dart2LexerBase.cs
 dotnet restore
   Determining projects to restore...
-  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 335 ms).
+  Restored C:\msys64\home\Kenne\dart\ScrapeDartSpec\test\scraped\Generated\Test.csproj (in 341 ms).
 dotnet build
 Microsoft (R) Build Engine version 17.2.0+41abc5629 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -23,7 +25,7 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:04.61
+Time Elapsed 00:00:05.07
 ~/dart/ScrapeDartSpec/test
 sdk/sdk/lib/async/async.dart 0
 sdk/sdk/lib/async/async_error.dart 0

@@ -17,7 +17,9 @@ fi
 
 rm -rf scraped
 mkdir scraped
-cp ../Dart2.g4 scraped/
+cp ../Dart2Lexer.g4 scraped/
+cp ../Dart2Parser.g4 scraped/
+cp -r ../support/* scraped/
 pushd scraped
 trgen -t CSharp -s compilationUnit
 cd Generated
