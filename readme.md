@@ -14,4 +14,8 @@ Following the raw grammar scrape, it is
 using basic Trash transformations.
 
 The final scraped grammar is in
-[scraped.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/scraped.g4).
+[scraped.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Parser.g4),
+and
+[scraped.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Lexer.g4).
+The grammar is in the [grammars-v4 repo](https://github.com/antlr/grammars-v4/pull/2654).
+
