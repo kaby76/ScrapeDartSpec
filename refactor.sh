@@ -173,6 +173,9 @@ trparse temp.g4 | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='multilineString']" | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='singleLineString']" | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringInterpolation']" | \
+	trdelete "//parserRuleSpec[RULE_REF/text()='scriptTag']" | \
+	trdelete "//alternative/element[atom/ruleref/RULE_REF/text()='scriptTag']" | \
+	trdelete "//TOKEN_REF[text()='EOF']" | \
 	trsponge -c
 
 trparse temp.g4 | \
@@ -314,17 +317,6 @@ trparse temp.g4 | \
 # Add in 'dynamic'.
 trparse temp.g4 | \
 	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' | 'native'" | \
-	trsponge -c
-
-# Cannot handle sciptTag. Just nuke.
-trparse temp.g4 | \
-	trdelete "//parserRuleSpec[RULE_REF/text()='scriptTag']" | \
-	trdelete "//alternative/element[atom/ruleref/RULE_REF/text()='scriptTag']" | \
-	trsponge -c
-
-# Nuke EOF mentions because it should be on the "start symbol".
-trparse temp.g4 | \
-	trdelete "//TOKEN_REF[text()='EOF']" | \
 	trsponge -c
 
 # Add start symbol.

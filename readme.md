@@ -191,13 +191,6 @@ cat temporary.txt | sed "s/'//g" | sed 's/$/_/' | tr [:lower:] [:upper:] > tempo
 paste -d ": " temporary2.txt temporary.txt | sed 's/$/;/' | sort -u > lexer_prods.txt
 ```
 
-## Add start rule
-
-The Spec does not give a start rule for the grammar. A start rule is added:
-```
-trparse orig.g4 | trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;" | trsponge -c
-```
-
 ## Delete problematic rules
 
 1) MULTI_LINE_STRING_DQ_BEGIN_END
@@ -231,3 +224,18 @@ trparse orig.g4 | trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "
 1) scriptTag
 1) singleLineString
 1) stringInterpolation
+
+
+## Nuke references to EOF
+
+For all rules, remove the reference to EOF since it should only appear on the start rule.
+```
+trparse orig.g4 | trdelete "//TOKEN_REF[text()='EOF']" | trsponge -c
+```
+
+## Add start rule
+
+The Spec does not give a start rule for the grammar. A start rule is added:
+```
+trparse orig.g4 | trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;" | trsponge -c
+```

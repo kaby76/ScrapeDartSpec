@@ -1,4 +1,4 @@
-/* Generated Fri, Jun 17, 2022 1:19:50 PM EST
+/* Generated Fri, Jun 17, 2022 6:50:37 PM EST
  *
  * Copyright (c) 2022, Ken Domino
  * MIT License (https://opensource.org/licenses/MIT)
@@ -130,7 +130,6 @@ isOperator : IS_ NOT? ;
 label : identifier CO ;
 letExpression : LET_ staticFinalDeclarationList IN_ expression ;
 libraryDeclaration :  libraryName? importOrExport* partDirective* ( metadata topLevelDeclaration )*  ;
-
 libraryExport : metadata EXPORT_ configurableUri combinator* SC ;
 libraryImport : metadata importSpecification ;
 libraryName : metadata LIBRARY_ dottedIdentifierList SC ;
