@@ -1,12 +1,12 @@
 # Scrape Dart Spec
 
-This project contains scripts and program to scrape the Context-Free Grammar (CFG)
+This project contains script and program to scrape the Context-Free Grammar (CFG)
 from the [Dart2 language specification](https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex),
 written in Latex, and output an Antlr4 grammar for Dart.
 
-The scraper is implemented in
-[refactor.sh](https://github.com/kaby76/ScrapeDartSpec/blob/master/refactor.sh), and
-works in two phase. In the first phase, the Latex file is read, where
+The scraper, implemented in
+[refactor.sh](https://github.com/kaby76/ScrapeDartSpec/blob/master/refactor.sh),
+works in two phases. In the first phase, the Latex file is read, where
 CFG rules are extracted from `\begin{grammar} ... \end{grammar}` blocks.
 The output in the first phase is [orig.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/orig.g4),
 which an Antlr4 grammar for Dart that is syntactically valid, but does not work.
