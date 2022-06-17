@@ -109,35 +109,35 @@ trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='LETTER']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NEWLINE']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='OTHER_IDENTIFIER']" "fragment " | \
-	trsponge -c true
+	trsponge -c
 
 # Other edits.	
 trparse temp.g4 | \
 	trreplace "//ruleSpec/parserRuleSpec[RULE_REF/text()='partDeclaration']/ruleBlock//element[atom/ruleref/RULE_REF/text()='topLevelDeclaration']" " (metadata topLevelDeclaration)*" | \
-	trsponge -c true
+	trsponge -c
 # HACK!!!
 trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/COLON" "'abstract'? (" | \
 	trinsert "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/SEMI" ")" | \
-	trsponge -c true
+	trsponge -c
 # HACK!!!
 trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionBody']/COLON" "'native' stringLiteral? ';' | " | \
-	trsponge -c true
+	trsponge -c
 
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
-	trsponge -c true
+	trsponge -c
 
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement/lexerBlock/lexerAltList/lexerAlt//notSet" "." | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement//ebnfSuffix"	"*?" | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/SEMI" " -> skip ;" | \
-	trsponge -c true
+	trsponge -c
 
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements" "'//' ~[\r\n]* -> skip" | \
-	trsponge -c true
+	trsponge -c
 
 # Nuke the Spec's string literal rules. We can't use them because the
 # rules reference parser rule <expression>. Antlr grammars cannot
@@ -173,7 +173,7 @@ trparse temp.g4 | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='multilineString']" | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='singleLineString']" | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringInterpolation']" | \
-	trsponge -c true
+	trsponge -c
 
 trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringLiteral']/SEMI" "
@@ -188,7 +188,7 @@ MultiLineString : '\"\"\"' StringContentTDQ*? '\"\"\"' | '\'\'\'' StringContentT
 fragment StringContentTDQ : ~('\\\\' | '\"') | '\"' ~'\"' | '\"\"' ~'\"' ;
 fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 " | \
-	trsponge -c true
+	trsponge -c
 
 # Get rid of blank lines. This can happen when we insert or delete
 # rules.
@@ -197,7 +197,7 @@ mv temporary5.txt temp.g4
 
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='RESERVED_WORD']" "reserved_word" | \
-	trsponge -c true
+	trsponge -c
 
 # Modify the "operator" rule.
 # The original is  "operator : '~' | binaryOperator | '[]' | '[]=' ;".
@@ -209,7 +209,7 @@ trparse temp.g4 | \
 trparse temp.g4 | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]\'\"\] "'[' ']'" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]=\'\"\] "'[' ']' '='" | \
-	trsponge -c true
+	trsponge -c
 
 # Modify the shiftOperator and compoundAssignmentOperator rules.
 trparse temp.g4 | \
@@ -218,7 +218,7 @@ trparse temp.g4 | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>=\'\"\] "'>' '>' '='" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>=\'\"\] "'>' '>' '>' '='" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'relationalOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>=\'\"\] "'>' '='" | \
-	trsponge -c true
+	trsponge -c
 	
 # Get all string literals that aren't part of a fragment. We'll use
 # that as a preliminary list of keywords.
@@ -291,50 +291,50 @@ mv txx.txt lexer_prods.txt
 
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NUMBER']" "`cat lexer_prods.txt`" | \
-	trsponge -c true
+	trsponge -c
 
 # TODO: The unfold operation should be used, but it doesn't work. For
 # now just use string replacement.
 # trparse temp.g4 | \
 #	trunfold "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" | \
-# 	trsponge -c true
+# 	trsponge -c
 trparse temp.g4 | \
 	trreplace "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef'" | \
-	trsponge -c true
+	trsponge -c
 
 trparse temp.g4 | \
 	trreplace "//parserRuleSpec[RULE_REF/text()='identifier']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' | 'Function'" | \
-	trsponge -c true
+	trsponge -c
 trparse temp.g4 | \
 	trinsert "//parserRuleSpec[RULE_REF/text()='typeIdentifier']//SEMI" "| 'Function'" | \
-	trsponge -c true
+	trsponge -c
 
 
 # Same thing.
 # Add in 'dynamic'.
 trparse temp.g4 | \
 	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' | 'native'" | \
-	trsponge -c true
+	trsponge -c
 
 # Cannot handle sciptTag. Just nuke.
 trparse temp.g4 | \
 	trdelete "//parserRuleSpec[RULE_REF/text()='scriptTag']" | \
 	trdelete "//alternative/element[atom/ruleref/RULE_REF/text()='scriptTag']" | \
-	trsponge -c true
+	trsponge -c
 
 # Nuke EOF mentions because it should be on the "start symbol".
 trparse temp.g4 | \
 	trdelete "//TOKEN_REF[text()='EOF']" | \
-	trsponge -c true
+	trsponge -c
 
 # Add start symbol.
 trparse temp.g4 | \
 	trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;
 " | \
-	trsponge -c true
+	trsponge -c
 
 echo Sorting grammar, wait...
-trparse temp.g4 | trsort | trsponge -c true
+trparse temp.g4 | trsort | trsponge -c
 
 # Make sure the symbols in parser rules are made into token names.
 # Hardwire a bunch in.
@@ -352,7 +352,7 @@ trparse temp.g4 | \
 mv temp.g4 Dart2.g4
 
 # Split.
-trparse -t antlr4 Dart2.g4 | trsplit | trsponge -c true
+trparse -t antlr4 Dart2.g4 | trsplit | trsponge -c
 rm Dart2.g4
 
 # Add options.
@@ -360,8 +360,11 @@ trparse Dart2Lexer.g4 | \
 	trinsert "//rules" "
 options { superClass=Dart2LexerBase; }
 " | \
-	trsponge -c true
+	trsponge -c
 
+dos2unix Dart2Lexer.g4
+dos2unix Dart2Parser.g4
+	
 # Validate before "releasing".
 cp -r ../support/* .
 trgen -s compilationUnit
