@@ -93,20 +93,20 @@ cp temp.g4 ../orig.g4
 # use of Antlr syntax to note tokenization level of the input.
 
 trparse temp.g4 | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NEWLINE']" "fragment " | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT']" "fragment " | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='LETTER']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "fragment " | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='OTHER_IDENTIFIER']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='DIGIT']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='ESCAPE_SEQUENCE']" "fragment " | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT_SEQUENCE']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='EXPONENT']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT_SEQUENCE']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_NO_DOLLAR']" "fragment " | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_START_NO_DOLLAR']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_PART']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_PART_NO_DOLLAR']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_START']" "fragment " | \
-	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_PART']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='IDENTIFIER_START_NO_DOLLAR']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='LETTER']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NEWLINE']" "fragment " | \
+	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='OTHER_IDENTIFIER']" "fragment " | \
 	trsponge -c true
 
 # Other edits.	
@@ -363,7 +363,6 @@ trparse temp.g4 | \
 	trfoldlit | trsponge -c
 
 mv temp.g4 Dart2.g4
-cp Dart2.g4 ..
 
 # Split.
 trparse -t antlr4 Dart2.g4 | trsplit | trsponge -c true
