@@ -1,6 +1,8 @@
-/* Generated Mon, Jun 13, 2022 8:11:58 AM EST
+/* Generated Fri, Jun 17, 2022 5:02:29 AM EST
  *
- * Copyright (c) 2022 Ken Domino
+ * Copyright (c) 2022, Ken Domino
+ * MIT License (https://opensource.org/licenses/MIT)
+ *
  * Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
  * for details. All rights reserved. Use of this source code is governed by a
  * BSD-style license that can be found in the LICENSE file.

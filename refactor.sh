@@ -1,5 +1,19 @@
 #!/bin/sh
 
+# Copyright (c) Ken Domino June 2022.
+# MIT License (https://opensource.org/licenses/MIT)
+#
+# This script builds a program to read the Dart Language Specification
+# (https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex)
+# then use Trash (https://github.com/kaby76/Domemtech.Trash) to modify
+# the extracted grammar to produce a grammar that works with Antlr.
+#
+# Some of the modifications from the spec have been "borrowed" from the
+# "reference grammar"
+# https://github.com/dart-lang/sdk/blob/master/tools/spec_parser/Dart.g
+# which is maintained by the Dart Language Team. Unfortunately, that
+# grammar doesn't parse many files in the Dart SDK.
+
 # Make sure Trash is installed.
 version="`trparse --version | head -1`"
 if [[ $? != "0" ]]
@@ -13,25 +27,34 @@ then
 	exit 1
 fi
 
-# Scrape and refactor the Dart grammar from the Specification.
-# Note, you can find a "reference grammar" in Antlr that would have
-# a similar grammar to the one generated here.
-# https://github.com/dart-lang/sdk/blob/master/tools/spec_parser/Dart.g
 
+# Trash uses XPath expressions to specify where to make modifications
+# to the Dart grammar. Trash represents the grammar as a parse tree.
+# Turn off MSYS2's conversion of "Unix" path interpretation and
+# conversion, otherwise the XPath expressions are modified by MSYS2
+# Bash.
 echo "Setting MSYS2_ARG_CONV_EXCL so that Trash XPaths do not get mutulated."
 export MSYS2_ARG_CONV_EXCL="*"
 
+# Build the Latex file scraper.
 cd tex-scraper; dotnet build; cd ..
 
+# make a temporary directory for the scrape.
 rm -rf xxx
 mkdir xxx
 cd xxx
 
+# Scrape the Latex file for the CFG in Antlr4 syntax.
 ../tex-scraper/bin/Debug/net6/ScrapeDartSpec.exe -file ../specs/dartLangSpec.tex > temp-temp.g4
+
+# Add in a header into the scraped code for copyrights and
+# acknowledgements.
 echo "/* Generated "`date`" EST" > temp-date.txt
 cat temp-date.txt - temp-temp.g4 << EOF > temp.g4
  *
- * Copyright (c) 2022 Ken Domino
+ * Copyright (c) 2022, Ken Domino
+ * MIT License (https://opensource.org/licenses/MIT)
+ *
  * Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
  * for details. All rights reserved. Use of this source code is governed by a
  * BSD-style license that can be found in the LICENSE file.
@@ -55,12 +78,20 @@ cat temp-date.txt - temp-temp.g4 << EOF > temp.g4
  * A copy of the SDK is provided in the examples for regression testing.
  */
 EOF
+
 rm -f temp-date.txt temp-temp.g4
 
+# Make sure any Windows line termination is converted to strictly Linux
+# format.
 dos2unix temp.g4
+
+# Make a backup of the original scraped grammar. From here we use Trash
+# to get the final grammar for Dart.
 cp temp.g4 ../orig.g4
 
-# Take care of fragment lexer rules.
+# Add "fragment" to selected lexer rules because the spec doesn't make
+# use of Antlr syntax to note tokenization level of the input.
+
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NEWLINE']" "fragment " | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='HEX_DIGIT']" "fragment " | \
@@ -157,36 +188,12 @@ SingleLineString
   | 'r\"' (~('\"' | '\n' | '\r'))* '\"'
   ;
 fragment StringDQ : '\"' StringContentDQ*? '\"' ;
-fragment StringContentDQ
-  : ~('\\\\' | '\"' | '\n' | '\r' | '\$')
-  | '\\\\' ~('\n' | '\r')
-  | StringDQ
-  | '\${' StringContentDQ*? '}'  
-  | '\$' { CheckNotOpenBrace() }?
-  ;
+fragment StringContentDQ : ~('\\\\' | '\"' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringDQ | '\${' StringContentDQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
-fragment StringContentSQ
-  : ~('\\\\' | '\'' | '\n' | '\r' | '\$')
-  | '\\\\' ~('\n' | '\r')
-  | StringSQ
-  | '\${' StringContentSQ*? '}'
-  | '\$' { CheckNotOpenBrace() }?
-  ;
-MultiLineString
-  : '\"\"\"' StringContentTDQ*? '\"\"\"'
-  | '\'\'\'' StringContentTSQ*? '\'\'\''
-  | 'r\"\"\"' (~'\"' | '\"' ~'\"' | '\"\"' ~'\"')* '\"\"\"'
-  | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\''
-  ;
-fragment StringContentTDQ
-  : ~('\\\\' | '\"')
-  | '\"' ~'\"' | '\"\"' ~'\"'
-  ;
-fragment StringContentTSQ
-  : '\'' ~'\''
-  | '\'\'' ~'\''
-  | .
-  ;
+fragment StringContentSQ : ~('\\\\' | '\'' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringSQ | '\${' StringContentSQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
+MultiLineString : '\"\"\"' StringContentTDQ*? '\"\"\"' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r\"\"\"' (~'\"' | '\"' ~'\"' | '\"\"' ~'\"')* '\"\"\"' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
+fragment StringContentTDQ : ~('\\\\' | '\"') | '\"' ~'\"' | '\"\"' ~'\"' ;
+fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 " | \
 	trsponge -c true
 
