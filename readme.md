@@ -19,3 +19,29 @@ and
 [Dart2Lexer.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Lexer.g4).
 The grammar is in the [grammars-v4 repo](https://github.com/antlr/grammars-v4/pull/2654).
 
+# Changes to the extracted grammar from the spec
+
+In order to get a functioning Antlr4 grammar for Dart, the extracted grammar from
+the Dart Language Specification required a number of edits.
+
+## Marking some lexer rules as "fragment"
+
+The Spec partition rules according to Antlr4 syntax whereby
+lowercase and uppercase names in the CFG are parser and lexer rules, respectively,
+the Spec does not describe the lexical structure well because some of the lexer
+rules should not used in the parser. These rules must be marked as "fragment".
+
+1) BUILT_IN_IDENTIFIER
+2) DIGIT
+3) ESCAPE_SEQUENCE
+4) EXPONENT
+5) HEX_DIGIT
+6) HEX_DIGIT_SEQUENCE
+7) IDENTIFIER_NO_DOLLAR
+8) IDENTIFIER_PART
+9) IDENTIFIER_PART_NO_DOLLAR
+10) IDENTIFIER_START
+11) IDENTIFIER_START_NO_DOLLAR
+12) LETTER
+13) NEWLINE
+14) OTHER_IDENTIFIER
