@@ -155,6 +155,7 @@ trparse temp.g4 | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='QUOTES_SQ']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='RAW_MULTI_LINE_STRING']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='RAW_SINGLE_LINE_STRING']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_BEGIN_END']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_BEGIN_MID']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_END']" | \
@@ -171,18 +172,14 @@ trparse temp.g4 | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_TSQ']" | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='multilineString']" | \
 	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='singleLineString']" | \
+	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringInterpolation']" | \
 	trsponge -c true
 
 trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringLiteral']/SEMI" "
 multilineString : MultiLineString;
 singleLineString : SingleLineString;
-SingleLineString
-  : StringDQ
-  | StringSQ
-  | 'r\'' (~('\'' | '\n' | '\r'))* '\''
-  | 'r\"' (~('\"' | '\n' | '\r'))* '\"'
-  ;
+SingleLineString : StringDQ | StringSQ | 'r\'' (~('\'' | '\n' | '\r'))* '\'' | 'r\"' (~('\"' | '\n' | '\r'))* '\"' ;
 fragment StringDQ : '\"' StringContentDQ*? '\"' ;
 fragment StringContentDQ : ~('\\\\' | '\"' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringDQ | '\${' StringContentDQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
@@ -193,11 +190,6 @@ fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 " | \
 	trsponge -c true
 
-trparse temp.g4 | \
-	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringInterpolation']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']" | \
-	trsponge -c true
-
 # Get rid of blank lines. This can happen when we insert or delete
 # rules.
 grep -E -v '^$' temp.g4 > temporary5.txt
@@ -206,7 +198,6 @@ mv temporary5.txt temp.g4
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='RESERVED_WORD']" "reserved_word" | \
 	trsponge -c true
-grep -E "reserved_word" temp.g4
 
 # Modify the "operator" rule.
 # The original is  "operator : '~' | binaryOperator | '[]' | '[]=' ;".
