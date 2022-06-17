@@ -60,7 +60,7 @@ trparse temp.g4 | trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='BUILT_IN_
 
 ```
 
-## Moving WHITESPACE to another "channel"
+## Moving WHITESPACE to another "channel" or otherwise ignored
 
 The Spec describes "whitespace" ([Section 5](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L503))
 as strings that should be ignored.
@@ -70,3 +70,20 @@ but Antlr4 requires the rule be marked up so that it can be ignored.
 ```
 trparse temp.g4 | trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | trsponge -c
 ```
+
+## Rewriting SINGLE_LINE_COMMENT and MULTI_LINE_COMMENT
+
+The Dart Language Specification has rules for single and multi-line comments
+([20.1.2](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L22275)).
+These rules must be marked so as to be "ignored" by the parser.
+```
+trparse temp.g4 | trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements" "'//' ~[\r\n]* -> skip" | trsponge -c
+```
+For the MULTI_LINE_COMMENT, the rule in the Spec doesn't work for Antlr
+because it is "greedy", meaning that it will recognize too much as a multi-line comment.
+```
+MULTI_LINE_COMMENT : '/*' ( MULTI_LINE_COMMENT | ~ '*/' )* '*/' ;
+=>
+MULTI_LINE_COMMENT : '/*' ( MULTI_LINE_COMMENT | . )*? '*/'  -> skip ;
+```
+
