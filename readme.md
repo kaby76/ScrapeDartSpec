@@ -8,22 +8,23 @@ of an Antlr grammar as the Spec changes.
 
 The scraper, implemented in
 [refactor.sh](https://github.com/kaby76/ScrapeDartSpec/blob/master/refactor.sh),
-works in two phases. In the first phase, the Latex file is read, where
-CFG rules are extracted from `\begin{grammar} ... \end{grammar}` blocks.
-The output in the first phase is [orig.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/orig.g4),
+works in two phases. In the first phase, the Latex file is read for `\begin{grammar} ... \end{grammar}` blocks,
+which contain groups of EBNF rules.
+The output is [orig.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/orig.g4),
 which an Antlr4 grammar for Dart that is syntactically valid, but does not work.
 In the second phase, the grammar is
-transformed in a working Antlr4 grammar for Dart,
+transformed into a working Antlr4 grammar for Dart,
 [Dart2Parser.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Parser.g4),
 and
 [Dart2Lexer.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Lexer.g4).
 
-The second phase refactors the grammar using Trash.
+The second phase refactors the grammar using
+[Trash](https://github.com/kaby76/Domemtech.Trash).
 
 # Refactoring of the CFG in the Spec
 
-In order to get a functioning Antlr4 grammar for Dart, the extracted grammar from
-the Dart Language Specification required a number of edits.
+In order to get a working Antlr4 grammar for Dart,
+the extracted EBNF rules require a number of edits.
 
 ## "fragment" lexer rules
 
@@ -189,3 +190,44 @@ trparse orig.g4 | trxgrep "//STRING_LITERAL[not(ancestor::lexerRuleSpec/FRAGMENT
 cat temporary.txt | sed "s/'//g" | sed 's/$/_/' | tr [:lower:] [:upper:] > temporary2.txt
 paste -d ": " temporary2.txt temporary.txt | sed 's/$/;/' | sort -u > lexer_prods.txt
 ```
+
+## Add start rule
+
+The Spec does not give a start rule for the grammar. A start rule is added:
+```
+trparse orig.g4 | trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;" | trsponge -c
+```
+
+## Delete problematic rules
+
+1) MULTI_LINE_STRING_DQ_BEGIN_END
+1) MULTI_LINE_STRING_DQ_BEGIN_MID
+1) MULTI_LINE_STRING_DQ_MID_END
+1) MULTI_LINE_STRING_DQ_MID_MID
+1) MULTI_LINE_STRING_SQ_BEGIN_END
+1) MULTI_LINE_STRING_SQ_BEGIN_MID
+1) MULTI_LINE_STRING_SQ_MID_END
+1) MULTI_LINE_STRING_SQ_MID_MID
+1) QUOTES_DQ
+1) QUOTES_SQ
+1) RAW_MULTI_LINE_STRING
+1) RAW_SINGLE_LINE_STRING
+1) SIMPLE_STRING_INTERPOLATION
+1) SINGLE_LINE_STRING_DQ_BEGIN_END
+1) SINGLE_LINE_STRING_DQ_BEGIN_MID
+1) SINGLE_LINE_STRING_DQ_MID_END
+1) SINGLE_LINE_STRING_DQ_MID_MID
+1) SINGLE_LINE_STRING_DQ_MID_MID
+1) SINGLE_LINE_STRING_SQ_BEGIN_END
+1) SINGLE_LINE_STRING_SQ_BEGIN_MID
+1) SINGLE_LINE_STRING_SQ_MID_END
+1) SINGLE_LINE_STRING_SQ_MID_MID
+1) STRING_CONTENT_COMMON
+1) STRING_CONTENT_DQ
+1) STRING_CONTENT_SQ
+1) STRING_CONTENT_TDQ
+1) STRING_CONTENT_TSQ
+1) multilineString
+1) scriptTag
+1) singleLineString
+1) stringInterpolation
