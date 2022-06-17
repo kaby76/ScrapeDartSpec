@@ -26,10 +26,15 @@ the Dart Language Specification required a number of edits.
 
 ## Marking some lexer rules as "fragment"
 
-The Spec partition rules according to Antlr4 syntax whereby
-lowercase and uppercase names in the CFG are parser and lexer rules, respectively,
-the Spec does not describe the lexical structure well because some of the lexer
-rules should not used in the parser. These rules must be marked as "fragment".
+The Spec describes the lexical structure of a Dart program accoding to the Antlr4
+symbol syntax: lowercase and uppercase names in the CFG are parser and lexer rules,
+respectively. 
+However, the Spec does not not differentiate lexer rules that should not be used in
+parser rules, and mark those rules as "fragment", meaning that *cannot* be referenced
+in a parser rule.
+
+Refactoring is performd to insert "fragment" for those lexer rules that should not be
+referenced in a parser rule, and not generate a token when recognized by the lexer.
 
 1) BUILT_IN_IDENTIFIER
 2) DIGIT
