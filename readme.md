@@ -29,12 +29,12 @@ the Dart Language Specification required a number of edits.
 The Spec describes the lexical structure of a Dart program accoding to the Antlr4
 symbol syntax: lowercase and uppercase names in the CFG are parser and lexer rules,
 respectively. 
-However, the Spec does not not differentiate lexer rules that should not be used in
-parser rules, and mark those rules as "fragment", meaning that *cannot* be referenced
-in a parser rule.
+However, the Spec does not not differentiate lexer rules that can be used in a parser
+rule vs. lexer rules that should never be used in a parser rule.
 
-Refactoring is performd to insert "fragment" for those lexer rules that should not be
-referenced in a parser rule, and not generate a token when recognized by the lexer.
+In order to have a functioning Antlr4 grammar for Dart,
+lexer rules that should never be used in a parser rule are marked
+as "fragment".
 
 1) BUILT_IN_IDENTIFIER
 2) DIGIT
