@@ -91,6 +91,8 @@ cp temp.g4 ../orig.g4
 
 # Add "fragment" to selected lexer rules because the spec doesn't make
 # use of Antlr syntax to note tokenization level of the input.
+# Note, much of the string literal rules are rewritten with this
+# script, so don't bother modifying those spec-listed rules.
 
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "fragment " | \
@@ -110,12 +112,6 @@ trparse temp.g4 | \
 	trsponge -c true
 
 # Other edits.	
-#trparse temp.g4 | \
-#	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='classDeclaration']/COLON" " metadata" | \
-#	trsponge -c true
-#trparse temp.g4 | \
-#	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionSignature']/COLON" " metadata" | \
-#	trsponge -c true
 trparse temp.g4 | \
 	trreplace "//ruleSpec/parserRuleSpec[RULE_REF/text()='partDeclaration']/ruleBlock//element[atom/ruleref/RULE_REF/text()='topLevelDeclaration']" " (metadata topLevelDeclaration)*" | \
 	trsponge -c true
@@ -129,7 +125,6 @@ trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionBody']/COLON" "'native' stringLiteral? ';' | " | \
 	trsponge -c true
 
-	
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
 	trsponge -c true
@@ -145,36 +140,38 @@ trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements" "'//' ~[\r\n]* -> skip" | \
 	trsponge -c true
 
-# All string literals are a mess. Replace everything.
+# Nuke the Spec's string literal rules. We can't use them because the
+# rules reference parser rule <expression>. Antlr grammars cannot
+# have lexer rules reference parser rules.
 trparse temp.g4 | \
-	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='singleLineString']" | \
-	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='multilineString']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='RAW_SINGLE_LINE_STRING']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_COMMON']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_SQ']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_BEGIN_END']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_BEGIN_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_MID_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_MID_END']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_DQ']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_BEGIN_END']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_BEGIN_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_END']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='RAW_MULTI_LINE_STRING']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='QUOTES_SQ']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_TSQ']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_BEGIN_END']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_BEGIN_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_MID_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_MID_END']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='QUOTES_DQ']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_TDQ']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_DQ_BEGIN_END']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_DQ_BEGIN_MID']" | \
-	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_DQ_MID_MID']" | \
 	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_DQ_MID_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_DQ_MID_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_BEGIN_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_BEGIN_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_MID_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_STRING_SQ_MID_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='QUOTES_DQ']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='QUOTES_SQ']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='RAW_MULTI_LINE_STRING']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='RAW_SINGLE_LINE_STRING']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_BEGIN_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_BEGIN_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_DQ_MID_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_BEGIN_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_BEGIN_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_MID_END']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_STRING_SQ_MID_MID']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_COMMON']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_DQ']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_SQ']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_TDQ']" | \
+	trdelete "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='STRING_CONTENT_TSQ']" | \
+	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='multilineString']" | \
+	trdelete "//ruleSpec/parserRuleSpec[RULE_REF/text()='singleLineString']" | \
 	trsponge -c true
 
 trparse temp.g4 | \
