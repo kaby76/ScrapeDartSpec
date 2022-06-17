@@ -28,13 +28,14 @@ the Dart Language Specification required a number of edits.
 
 The Spec describes the lexical structure of a Dart program accoding to the Antlr4
 symbol syntax: lowercase and uppercase names in the CFG are parser and lexer rules,
-respectively. 
+respectively (["lexer"](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L501)).
 However, the Spec does not not differentiate lexer rules that can be used in a parser
 rule vs. lexer rules that should never be used in a parser rule.
 
 In order to have a functioning Antlr4 grammar for Dart,
-lexer rules that should never be used in a parser rule are marked
-as "fragment".
+lexer rules that should never be used in a parser rule *must be*
+marked as "fragment". Otherwise, it would be possible for the lexer to recognize those
+strings, and return a token that cannot be used.
 
 1) BUILT_IN_IDENTIFIER
 2) DIGIT
@@ -50,3 +51,22 @@ as "fragment".
 12) LETTER
 13) NEWLINE
 14) OTHER_IDENTIFIER
+
+Marking these rules in Trash is through the
+[trinsert](https://github.com/kaby76/Domemtech.Trash/tree/main/trinsert)
+command.
+```
+trparse temp.g4 | trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "fragment " | trsponge -c
+
+```
+
+## Moving WHITESPACE to another "channel"
+
+The Spec describes "whitespace" ([Section 5](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L503))
+as strings that should be ignored.
+It is described in
+[20.1.1](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L16603),
+but Antlr4 requires the rule be marked up so that it can be ignored.
+```
+trparse temp.g4 | trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | trsponge -c
+```

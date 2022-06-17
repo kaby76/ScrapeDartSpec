@@ -128,7 +128,6 @@ trparse temp.g4 | \
 trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
 	trsponge -c true
-grep -E "WHITESPACE.*-> skip" temp.g4
 
 trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement/lexerBlock/lexerAltList/lexerAlt//notSet" "." | \
