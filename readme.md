@@ -88,12 +88,10 @@ MULTI_LINE_COMMENT : '/*' ( MULTI_LINE_COMMENT | . )*? '*/'  -> skip ;
 
 ## Refactoring problematic tokens
 
-In the Spec, there are rules that contain tokens like '[]' and '>>'. These tokens are
-cause problems in parsing because Antlr4 does not usually take into consideration the
-context of the parse for lexing.
-
-In Dart, generics can cause problems for the lexer because '>>' could be an operator
-or the end of a generic.
+In the Spec, there are rules that contain string literals like '[]' and '>>'. In Antlr,
+these are declared as tokens. There can be a problem in parsing if there are substring
+literals that are also referenced, e.g. '[' and '>'. For example `>>` can be used in either
+the end of a generic, or as a shift operator in an expression:
 
 ```
     final typedCharCodes = unsafeCast<List<int>>(charCodes);
@@ -101,7 +99,8 @@ or the end of a generic.
     sliceStart = bits >> _lengthBits;
 ```
 
-The uaual workaround for these The string literals in the CFG must be refactored into multiple string literals,
+The usual workaround for these problems is to refactor the single string literals into
+multiple string literals:
 
 ```
 trparse orig.g4 | trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\'\"\] "'>' '>'" | trsponge -c
@@ -181,7 +180,8 @@ ST: '*';
 STE: '*=';
 ```
 
-The script collects all keywords:
+The script collects all keywords, and creates a rule for each. Lexer "fragment" rules are
+not considered.
 ```
 trparse orig.g4 | trxgrep "//STRING_LITERAL[not(ancestor::lexerRuleSpec/FRAGMENT) or ancestor::lexerRuleSpec/TOKEN_REF/text()='BUILT_IN_IDENTIFIER' or ancestor::lexerRuleSpec/TOKEN_REF/text()='OTHER_IDENTIFIER']/text()" | grep -E "'[a-zA-Z]+'" > temporary.txt
 cat temporary.txt | sed "s/'//g" | sed 's/$/_/' | tr [:lower:] [:upper:] > temporary2.txt

@@ -1,4 +1,4 @@
-/* Generated Fri, Jun 17, 2022 5:55:26 AM EST
+/* Generated Fri, Jun 17, 2022 12:53:48 PM EST
  *
  * Copyright (c) 2022, Ken Domino
  * MIT License (https://opensource.org/licenses/MIT)
@@ -152,12 +152,7 @@ YIELD_:'yield';NUMBER : DIGIT+ ( '.' DIGIT+ )? EXPONENT? | '.' DIGIT+ EXPONENT? 
 fragment EXPONENT : ( 'e' | 'E' ) ( '+' | '-' )? DIGIT+ ;
 HEX_NUMBER : '0x' HEX_DIGIT+ | '0X' HEX_DIGIT+ ;
 fragment HEX_DIGIT : 'a' .. 'f' | 'A' .. 'F' | DIGIT ;
-SingleLineString
-  : StringDQ
-  | StringSQ
-  | 'r\'' (~('\'' | '\n' | '\r'))* '\''
-  | 'r"' (~('"' | '\n' | '\r'))* '"'
-  ;
+SingleLineString : StringDQ | StringSQ | 'r\'' (~('\'' | '\n' | '\r'))* '\'' | 'r"' (~('"' | '\n' | '\r'))* '"' ;
 fragment StringDQ : '"' StringContentDQ*? '"' ;
 fragment StringContentDQ : ~('\\' | '"' | '\n' | '\r' | '$') | '\\' ~('\n' | '\r') | StringDQ | '${' StringContentDQ*? '}' | '$' { CheckNotOpenBrace() }? ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
