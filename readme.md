@@ -11,7 +11,7 @@ The scraper, implemented in
 works in two phases. In the first phase, the Latex file is read for `\begin{grammar} ... \end{grammar}` blocks,
 which contain groups of EBNF rules.
 The output is [orig.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/orig.g4),
-which an Antlr4 grammar for Dart that is syntactically valid, but does not work.
+which is an Antlr4 grammar for Dart that is syntactically valid, but does not work.
 In the second phase, the grammar is
 transformed into a working Antlr4 grammar for Dart,
 [Dart2Parser.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Parser.g4),
