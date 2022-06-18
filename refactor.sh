@@ -182,12 +182,12 @@ trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='stringLiteral']/SEMI" "
 multilineString : MultiLineString;
 singleLineString : SingleLineString;
+MultiLineString : '\"\"\"' StringContentTDQ*? '\"\"\"' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r\"\"\"' (~'\"' | '\"' ~'\"' | '\"\"' ~'\"')* '\"\"\"' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
 SingleLineString : StringDQ | StringSQ | 'r\'' (~('\'' | '\n' | '\r'))* '\'' | 'r\"' (~('\"' | '\n' | '\r'))* '\"' ;
 fragment StringDQ : '\"' StringContentDQ*? '\"' ;
 fragment StringContentDQ : ~('\\\\' | '\"' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringDQ | '\${' StringContentDQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
 fragment StringSQ : '\'' StringContentSQ*? '\'' ;
 fragment StringContentSQ : ~('\\\\' | '\'' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringSQ | '\${' StringContentSQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
-MultiLineString : '\"\"\"' StringContentTDQ*? '\"\"\"' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r\"\"\"' (~'\"' | '\"' ~'\"' | '\"\"' ~'\"')* '\"\"\"' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
 fragment StringContentTDQ : ~('\\\\' | '\"') | '\"' ~'\"' | '\"\"' ~'\"' ;
 fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 " | \
@@ -209,18 +209,15 @@ trparse temp.g4 | \
 # it must be parsed as '[' then ']'.
 # The "reference grammar" for dart contains just this refactoring:
 # https://github.com/dart-lang/sdk/blob/21b07646f5c85be2e8a618de753d077917b5b434/tools/spec_parser/Dart.g#L419
-trparse temp.g4 | \
-	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]\'\"\] "'[' ']'" | \
-	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]=\'\"\] "'[' ']' '='" | \
-	trsponge -c
-
 # Modify the shiftOperator and compoundAssignmentOperator rules.
 trparse temp.g4 | \
-	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\'\"\] "'>' '>'" | \
-	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>\'\"\] "'>' '>' '>'" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>=\'\"\] "'>' '>' '='" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'compoundAssignmentOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>=\'\"\] "'>' '>' '>' '='" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]=\'\"\] "'[' ']' '='" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'operator\'\]//STRING_LITERAL\[text\(\)=\"\'\[\]\'\"\] "'[' ']'" | \
 	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'relationalOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>=\'\"\] "'>' '='" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\'\"\] "'>' '>'" | \
+	trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shiftOperator\'\]//STRING_LITERAL\[text\(\)=\"\'\>\>\>\'\"\] "'>' '>' '>'" | \
 	trsponge -c
 	
 # Get all string literals that aren't part of a fragment. We'll use
