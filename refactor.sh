@@ -114,28 +114,13 @@ trparse temp.g4 | \
 # Other edits.	
 trparse temp.g4 | \
 	trreplace "//ruleSpec/parserRuleSpec[RULE_REF/text()='partDeclaration']/ruleBlock//element[atom/ruleref/RULE_REF/text()='topLevelDeclaration']" " (metadata topLevelDeclaration)*" | \
-	trsponge -c
-# HACK!!!
-trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/COLON" "'abstract'? (" | \
 	trinsert "//ruleSpec/parserRuleSpec[RULE_REF/text()='declaration']/SEMI" ")" | \
-	trsponge -c
-# HACK!!!
-trparse temp.g4 | \
 	trinsert -a "//ruleSpec/parserRuleSpec[RULE_REF/text()='functionBody']/COLON" "'native' stringLiteral? ';' | " | \
-	trsponge -c
-
-trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | \
-	trsponge -c
-
-trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement/lexerBlock/lexerAltList/lexerAlt//notSet" "." | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements/lexerElement//ebnfSuffix"	"*?" | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='MULTI_LINE_COMMENT']/SEMI" " -> skip ;" | \
-	trsponge -c
-
-trparse temp.g4 | \
 	trreplace "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='SINGLE_LINE_COMMENT']/lexerRuleBlock/lexerAltList/lexerAlt/lexerElements" "'//' ~[\r\n]* -> skip" | \
 	trsponge -c
 
@@ -293,26 +278,10 @@ trparse temp.g4 | \
 	trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='NUMBER']" "`cat lexer_prods.txt`" | \
 	trsponge -c
 
-# TODO: The unfold operation should be used, but it doesn't work. For
-# now just use string replacement.
-# trparse temp.g4 | \
-#	trunfold "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" | \
-# 	trsponge -c
 trparse temp.g4 | \
 	trreplace "//lexerRuleSpec[TOKEN_REF/text()='SIMPLE_STRING_INTERPOLATION']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef'" | \
-	trsponge -c
-
-trparse temp.g4 | \
 	trreplace "//parserRuleSpec[RULE_REF/text()='identifier']//TOKEN_REF[text()='BUILT_IN_IDENTIFIER']" "'abstract' | 'as' | 'covariant' | 'deferred' | 'dynamic' | 'export' | 'external' | 'extension' | 'factory' | 'Function' | 'get' | 'implements' | 'import' | 'interface' | 'late' | 'library' | 'mixin' | 'operator' | 'part' | 'required' | 'set' | 'static' | 'typedef' | 'Function'" | \
-	trsponge -c
-trparse temp.g4 | \
 	trinsert "//parserRuleSpec[RULE_REF/text()='typeIdentifier']//SEMI" "| 'Function'" | \
-	trsponge -c
-
-
-# Same thing.
-# Add in 'dynamic'.
-trparse temp.g4 | \
 	trreplace "//parserRuleSpec/ruleBlock//TOKEN_REF[text()='OTHER_IDENTIFIER']" "'async' | 'hide' | 'of' | 'on' | 'show' | 'sync' | 'await' | 'yield' | 'dynamic' | 'native'" | \
 	trsponge -c
 

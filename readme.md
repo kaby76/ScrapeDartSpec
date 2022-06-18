@@ -258,3 +258,47 @@ fragment StringContentSQ : ~('\\\\' | '\'' | '\n' | '\r' | '\$') | '\\\\' ~('\n'
 fragment StringContentTDQ : ~('\\\\' | '\"') | '\"' ~'\"' | '\"\"' ~'\"' ;
 fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 ```
+
+## partDeclaration
+
+```
+partDeclaration : partHeader topLevelDeclaration* EOF ;
+=>
+partDeclaration : partHeader  (metadata topLevelDeclaration)*  ;
+```
+
+## declaration
+
+```
+declaration : 'external' factoryConstructorSignature | 'external' constantConstructorSignature | 'external' constructorSignature | ( 'external' 'static'? )? getterSignature | ( 'external' 'static'? )? setterSignature | ( 'external' 'static'? )? functionSignature | 'external'? operatorSignature | 'static' 'const' type? staticFinalDeclarationList | 'static' 'final' type? staticFinalDeclarationList | 'static' 'late' 'final' type? initializedIdentifierList | 'static' 'late'? varOrType initializedIdentifierList | 'covariant' 'late' 'final' type? identifierList | 'covariant' 'late'? varOrType initializedIdentifierList | 'late'? 'final' type? initializedIdentifierList | 'late'? varOrType initializedIdentifierList | redirectingFactoryConstructorSignature | constantConstructorSignature ( redirection | initializers )? | constructorSignature ( redirection | initializers )? ;
+=>
+declaration :ABSTRACT_? ( EXTERNAL_ factoryConstructorSignature | EXTERNAL_ constantConstructorSignature | EXTERNAL_ constructorSignature | ( EXTERNAL_ STATIC_? )? getterSignature | ( EXTERNAL_ STATIC_? )? setterSignature | ( EXTERNAL_ STATIC_? )? functionSignature | EXTERNAL_? operatorSignature | STATIC_ CONST_ type? staticFinalDeclarationList | STATIC_ FINAL_ type? staticFinalDeclarationList | STATIC_ LATE_ FINAL_ type? initializedIdentifierList | STATIC_ LATE_? varOrType initializedIdentifierList | COVARIANT_ LATE_ FINAL_ type? identifierList | COVARIANT_ LATE_? varOrType initializedIdentifierList | LATE_? FINAL_ type? initializedIdentifierList | LATE_? varOrType initializedIdentifierList | redirectingFactoryConstructorSignature | constantConstructorSignature ( redirection | initializers )? | constructorSignature ( redirection | initializers )? );
+```
+
+## functionBody
+```
+functionBody : 'async'? '=>' expression ';' | ( 'async' '*'? | 'sync' '*' )? block ;
+=>
+functionBody :NATIVE_ stringLiteral? SC |  ASYNC_? EG expression SC | ( ASYNC_ ST? | SYNC_ ST )? block ;
+```
+
+## reserved_word
+```
+RESERVED_WORD : 'assert' | 'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'default' | 'do' | 'else' | 'enum' | 'extends' | 'false' | 'final' | 'finally' | 'for' | 'if' | 'in' | 'is' | 'new' | 'null' | 'rethrow' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'true' | 'try' | 'var' | 'void' | 'while' | 'with' ;
+=>
+reserved_word : ASSERT_ | BREAK_ | CASE_ | CATCH_ | CLASS_ | CONST_ | CONTINUE_ | DEFAULT_ | DO_ | ELSE_ | ENUM_ | EXTENDS_ | FALSE_ | FINAL_ | FINALLY_ | FOR_ | IF_ | IN_ | IS_ | NEW_ | NULL_ | RETHROW_ | RETURN_ | SUPER_ | SWITCH_ | THIS_ | THROW_ | TRUE_ | TRY_ | VAR_ | VOID_ | WHILE_ | WITH_ ;
+```
+
+## identifier
+```
+identifier : IDENTIFIER | BUILT_IN_IDENTIFIER | OTHER_IDENTIFIER ;
+=>
+identifier : IDENTIFIER | ABSTRACT_ | AS_ | COVARIANT_ | DEFERRED_ | DYNAMIC_ | EXPORT_ | EXTERNAL_ | EXTENSION_ | FACTORY_ | FUNCTION_ | GET_ | IMPLEMENTS_ | IMPORT_ | INTERFACE_ | LATE_ | LIBRARY_ | MIXIN_ | OPERATOR_ | PART_ | REQUIRED_ | SET_ | STATIC_ | TYPEDEF_ | FUNCTION_ | ASYNC_ | HIDE_ | OF_ | ON_ | SHOW_ | SYNC_ | AWAIT_ | YIELD_ | DYNAMIC_ | NATIVE_ ;
+```
+
+## typeIdentifier
+```
+typeIdentifier : IDENTIFIER | OTHER_IDENTIFIER ;
+=>
+typeIdentifier : IDENTIFIER | ASYNC_ | HIDE_ | OF_ | ON_ | SHOW_ | SYNC_ | AWAIT_ | YIELD_ | DYNAMIC_ | NATIVE_ | FUNCTION_;
+```
