@@ -2,24 +2,29 @@
 
 This project extracts the Context-Free Grammar (CFG)
 for Dart from the [Dart2 language specification](https://github.com/dart-lang/language/blob/master/specification/dartLangSpec.tex),
-written in Latex, and outputs an Antlr4 grammar.
+written in Latex, and outputs a working, high-quality Antlr4 grammar for Dart.
 The reason for the tool is to ease construction 
 of an Antlr grammar as the Spec changes.
 
 The scraper, implemented in
 [refactor.sh](https://github.com/kaby76/ScrapeDartSpec/blob/master/refactor.sh),
-works in two phases. In the first phase, the Latex file is read for `\begin{grammar} ... \end{grammar}` blocks,
+works in two phases.
+
+In the first phase, the Spec is scanned for `\begin{grammar} ... \end{grammar}` blocks,
 which contain groups of EBNF rules.
-The output is [orig.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/orig.g4),
-which is an Antlr4 grammar for Dart that is syntactically valid, but does not work.
-In the second phase, the grammar is
+The raw CFG from the Spec is outputted
+([orig.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/orig.g4)).
+This grammar is in Antlr4 syntax, but does not work.
+
+In the second phase, this grammar is
 transformed into a working Antlr4 grammar for Dart,
 [Dart2Parser.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Parser.g4),
 and
 [Dart2Lexer.g4](https://github.com/kaby76/ScrapeDartSpec/blob/master/Dart2Lexer.g4).
-
-The second phase refactors the grammar using
-[Trash](https://github.com/kaby76/Domemtech.Trash).
+There are approximately three dozen modifications that are perform, which are described below.
+These refactoring are generally through
+[Trash](https://github.com/kaby76/Domemtech.Trash), but there are a few that require
+Bash shell glue to complete the operation.
 
 # Refactoring of the CFG in the Spec
 
