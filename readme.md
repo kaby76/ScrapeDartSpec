@@ -239,3 +239,22 @@ The Spec does not give a start rule for the grammar. A start rule is added:
 ```
 trparse orig.g4 | trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;" | trsponge -c
 ```
+
+## Add replacement string literal rules
+
+The string literal rules are lexer rules, but they reference parser rules. You cannot
+do this directly in Antlr (one would need to call the parser as an action in the lexer
+rule).
+
+```
+multilineString : MultiLineString;
+singleLineString : SingleLineString;
+MultiLineString : '\"\"\"' StringContentTDQ*? '\"\"\"' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r\"\"\"' (~'\"' | '\"' ~'\"' | '\"\"' ~'\"')* '\"\"\"' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
+SingleLineString : StringDQ | StringSQ | 'r\'' (~('\'' | '\n' | '\r'))* '\'' | 'r\"' (~('\"' | '\n' | '\r'))* '\"' ;
+fragment StringDQ : '\"' StringContentDQ*? '\"' ;
+fragment StringContentDQ : ~('\\\\' | '\"' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringDQ | '\${' StringContentDQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
+fragment StringSQ : '\'' StringContentSQ*? '\'' ;
+fragment StringContentSQ : ~('\\\\' | '\'' | '\n' | '\r' | '\$') | '\\\\' ~('\n' | '\r') | StringSQ | '\${' StringContentSQ*? '}' | '\$' { CheckNotOpenBrace() }? ;
+fragment StringContentTDQ : ~('\\\\' | '\"') | '\"' ~'\"' | '\"\"' ~'\"' ;
+fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
+```
