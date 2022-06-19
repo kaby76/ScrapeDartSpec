@@ -26,7 +26,7 @@ The second phase refactors the grammar using
 In order to get a working Antlr4 grammar for Dart,
 the extracted EBNF rules require a number of edits.
 
-## "fragment" lexer rules
+## 1. "fragment" lexer rules
 
 The Spec describes the lexical structure of a Dart program accoding to the Antlr4
 symbol syntax: lowercase and uppercase names in the CFG are parser and lexer rules,
@@ -62,7 +62,7 @@ trparse orig.g4 | trinsert "//ruleSpec/lexerRuleSpec/TOKEN_REF[text()='BUILT_IN_
 
 ```
 
-## WHITESPACE
+## 2. WHITESPACE
 
 The Spec describes "whitespace" ([Section 5](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L503))
 as strings that should be ignored.
@@ -73,7 +73,7 @@ but Antlr4 requires the rule be marked up so that it can be ignored.
 trparse orig.g4 | trinsert "//ruleSpec/lexerRuleSpec[TOKEN_REF/text()='WHITESPACE']/SEMI" " -> skip" | trsponge -c
 ```
 
-## SINGLE_LINE_COMMENT and MULTI_LINE_COMMENT
+## 3. SINGLE_LINE_COMMENT and MULTI_LINE_COMMENT
 
 The Dart Language Specification has rules for single and multi-line comments
 ([20.1.2](https://github.com/dart-lang/language/blob/91da80e9100167d88760376532a9d239b88d44f0/specification/dartLangSpec.tex#L22275)).
@@ -89,7 +89,7 @@ MULTI_LINE_COMMENT : '/*' ( MULTI_LINE_COMMENT | ~ '*/' )* '*/' ;
 MULTI_LINE_COMMENT : '/*' ( MULTI_LINE_COMMENT | . )*? '*/'  -> skip ;
 ```
 
-## Refactoring problematic tokens
+## 4. Refactoring problematic tokens
 
 In the Spec, there are rules that contain string literals like '[]' and '>>'. In Antlr,
 these are declared as tokens. There can be a problem in parsing if there are substring
@@ -117,7 +117,7 @@ trparse orig.g4 | trreplace //ruleSpec/parserRuleSpec\[RULE_REF/text\(\)=\'shift
 6) '[]' => '[' ']'
 7) '[]=' => '[' ']' '='
 
-## Missing token rules for split grammar
+## 5. Missing token rules for split grammar
 
 The grammar for Dart requires a few semantic predicates to examine lookahead.
 This is implemented in "target agnostic format" in Antlr, which uses
@@ -191,7 +191,7 @@ cat temporary.txt | sed "s/'//g" | sed 's/$/_/' | tr [:lower:] [:upper:] > tempo
 paste -d ": " temporary2.txt temporary.txt | sed 's/$/;/' | sort -u > lexer_prods.txt
 ```
 
-## Delete problematic rules
+## 6. Delete problematic rules
 
 1) MULTI_LINE_STRING_DQ_BEGIN_END
 1) MULTI_LINE_STRING_DQ_BEGIN_MID
@@ -226,21 +226,21 @@ paste -d ": " temporary2.txt temporary.txt | sed 's/$/;/' | sort -u > lexer_prod
 1) stringInterpolation
 
 
-## Nuke references to EOF
+## 7. Nuke references to EOF
 
 For all rules, remove the reference to EOF since it should only appear on the start rule.
 ```
 trparse orig.g4 | trdelete "//TOKEN_REF[text()='EOF']" | trsponge -c
 ```
 
-## Add start rule
+## 8. Add start rule
 
 The Spec does not give a start rule for the grammar. A start rule is added:
 ```
 trparse orig.g4 | trinsert "//parserRuleSpec[RULE_REF/text()='letExpression']" "compilationUnit: (libraryDeclaration | partDeclaration | expression | statement) EOF ;" | trsponge -c
 ```
 
-## Add replacement string literal rules
+## 9. Add replacement string literal rules
 
 The string literal rules are lexer rules, but they reference parser rules. You cannot
 do this directly in Antlr (one would need to call the parser as an action in the lexer
@@ -259,7 +259,7 @@ fragment StringContentTDQ : ~('\\\\' | '\"') | '\"' ~'\"' | '\"\"' ~'\"' ;
 fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 ```
 
-## partDeclaration
+## 10. partDeclaration
 
 ```
 partDeclaration : partHeader topLevelDeclaration* EOF ;
@@ -267,7 +267,7 @@ partDeclaration : partHeader topLevelDeclaration* EOF ;
 partDeclaration : partHeader  (metadata topLevelDeclaration)*  ;
 ```
 
-## declaration
+## 11. declaration
 
 ```
 declaration : 'external' factoryConstructorSignature | 'external' constantConstructorSignature | 'external' constructorSignature | ( 'external' 'static'? )? getterSignature | ( 'external' 'static'? )? setterSignature | ( 'external' 'static'? )? functionSignature | 'external'? operatorSignature | 'static' 'const' type? staticFinalDeclarationList | 'static' 'final' type? staticFinalDeclarationList | 'static' 'late' 'final' type? initializedIdentifierList | 'static' 'late'? varOrType initializedIdentifierList | 'covariant' 'late' 'final' type? identifierList | 'covariant' 'late'? varOrType initializedIdentifierList | 'late'? 'final' type? initializedIdentifierList | 'late'? varOrType initializedIdentifierList | redirectingFactoryConstructorSignature | constantConstructorSignature ( redirection | initializers )? | constructorSignature ( redirection | initializers )? ;
@@ -275,28 +275,28 @@ declaration : 'external' factoryConstructorSignature | 'external' constantConstr
 declaration :ABSTRACT_? ( EXTERNAL_ factoryConstructorSignature | EXTERNAL_ constantConstructorSignature | EXTERNAL_ constructorSignature | ( EXTERNAL_ STATIC_? )? getterSignature | ( EXTERNAL_ STATIC_? )? setterSignature | ( EXTERNAL_ STATIC_? )? functionSignature | EXTERNAL_? operatorSignature | STATIC_ CONST_ type? staticFinalDeclarationList | STATIC_ FINAL_ type? staticFinalDeclarationList | STATIC_ LATE_ FINAL_ type? initializedIdentifierList | STATIC_ LATE_? varOrType initializedIdentifierList | COVARIANT_ LATE_ FINAL_ type? identifierList | COVARIANT_ LATE_? varOrType initializedIdentifierList | LATE_? FINAL_ type? initializedIdentifierList | LATE_? varOrType initializedIdentifierList | redirectingFactoryConstructorSignature | constantConstructorSignature ( redirection | initializers )? | constructorSignature ( redirection | initializers )? );
 ```
 
-## functionBody
+## 12. functionBody
 ```
 functionBody : 'async'? '=>' expression ';' | ( 'async' '*'? | 'sync' '*' )? block ;
 =>
 functionBody :NATIVE_ stringLiteral? SC |  ASYNC_? EG expression SC | ( ASYNC_ ST? | SYNC_ ST )? block ;
 ```
 
-## reserved_word
+## 13. reserved_word
 ```
 RESERVED_WORD : 'assert' | 'break' | 'case' | 'catch' | 'class' | 'const' | 'continue' | 'default' | 'do' | 'else' | 'enum' | 'extends' | 'false' | 'final' | 'finally' | 'for' | 'if' | 'in' | 'is' | 'new' | 'null' | 'rethrow' | 'return' | 'super' | 'switch' | 'this' | 'throw' | 'true' | 'try' | 'var' | 'void' | 'while' | 'with' ;
 =>
 reserved_word : ASSERT_ | BREAK_ | CASE_ | CATCH_ | CLASS_ | CONST_ | CONTINUE_ | DEFAULT_ | DO_ | ELSE_ | ENUM_ | EXTENDS_ | FALSE_ | FINAL_ | FINALLY_ | FOR_ | IF_ | IN_ | IS_ | NEW_ | NULL_ | RETHROW_ | RETURN_ | SUPER_ | SWITCH_ | THIS_ | THROW_ | TRUE_ | TRY_ | VAR_ | VOID_ | WHILE_ | WITH_ ;
 ```
 
-## identifier
+## 14. identifier
 ```
 identifier : IDENTIFIER | BUILT_IN_IDENTIFIER | OTHER_IDENTIFIER ;
 =>
 identifier : IDENTIFIER | ABSTRACT_ | AS_ | COVARIANT_ | DEFERRED_ | DYNAMIC_ | EXPORT_ | EXTERNAL_ | EXTENSION_ | FACTORY_ | FUNCTION_ | GET_ | IMPLEMENTS_ | IMPORT_ | INTERFACE_ | LATE_ | LIBRARY_ | MIXIN_ | OPERATOR_ | PART_ | REQUIRED_ | SET_ | STATIC_ | TYPEDEF_ | FUNCTION_ | ASYNC_ | HIDE_ | OF_ | ON_ | SHOW_ | SYNC_ | AWAIT_ | YIELD_ | DYNAMIC_ | NATIVE_ ;
 ```
 
-## typeIdentifier
+## 15. typeIdentifier
 ```
 typeIdentifier : IDENTIFIER | OTHER_IDENTIFIER ;
 =>
